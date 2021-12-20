@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.AddOrUpdateMealFragment"
+        android:orientation="vertical">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/meal_name_label"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:hint="@string/new_meal_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/meal_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textAutoComplete"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/category_label"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:hint="@string/new_category">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/category"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textAutoComplete"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/calories_label"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:hint="@string/new_calories">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/calories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textAutoComplete"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/carbohydrates_label"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:hint="@string/new_carbohydrates">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/carbohydrates"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textAutoComplete"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/proteins_label"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:hint="@string/new_proteins">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/proteins"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textAutoComplete"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fats_label"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:hint="@string/new_fats">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fats"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textAutoComplete"
+            android:singleLine="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/veggieSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:paddingHorizontal="10dp"
+        android:text="@string/new_isVeggie"
+        android:textAlignment="viewStart" />
+
+    <Button
+        android:id="@+id/saveMealButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/secondaryColor"
+        android:text="@string/save_meal_button_text" />
+
+
+</LinearLayout>

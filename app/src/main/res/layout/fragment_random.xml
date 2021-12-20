@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:orientation="vertical"
+    tools:context=".ui.random.RandomFragment">
+
+    <TextView
+        android:id="@+id/textViewRandomMealName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Name des Gerichts:" />
+
+    <TextView
+        android:id="@+id/textViewRandomMealCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Kategorie:" />
+
+    <TextView
+        android:id="@+id/textViewRandomMealCalories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Kalorien:" />
+
+    <TextView
+        android:id="@+id/textViewRandomMealCarbs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Kohlenhydrate:" />
+
+    <TextView
+        android:id="@+id/textViewRandomMealProtein"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Eiweiß:" />
+
+    <TextView
+        android:id="@+id/textViewRandomMealFat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Fett:" />
+
+    <TextView
+        android:id="@+id/textViewRandomMealVeggie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="vegetarisch?:" />
+
+    <Button
+        android:id="@+id/randomButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Zufallsgericht" />
+
+</LinearLayout>

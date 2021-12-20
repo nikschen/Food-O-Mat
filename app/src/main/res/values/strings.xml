@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Food-O-Mat</string>
+    <string name="title_random">Zufall</string>
+    <string name="title_dashboard">Übersicht</string>
+    <string name="title_search">Suche</string>
+    <string name="category">Kategorie: %1$s</string>
+    <string name="calories">Kalorien: %1$2f</string>
+    <string name="carbohydrates">Kohlenhydrate: %1$2f</string>
+    <string name="proteins">Eiweiß: %1$2f</string>
+    <string name="fats">Fett: %1$2f</string>
+    <string name="isVeggie">Vegetarisch?: %1$s</string>
+    <string name="newMealButton">Neues Gericht hinzufügen</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="save_meal_button_text">Gericht speichern</string>
+    <string name="new_meal_name">Name des Gerichts</string>
+    <string name="new_category">Kategorie</string>
+    <string name="new_calories">Kalorien</string>
+    <string name="new_carbohydrates">Kohlenhydrate</string>
+    <string name="new_proteins">Eiweiß</string>
+    <string name="new_fats">Fett</string>
+    <string name="new_isVeggie">Vegetarisch?</string>
+    <string name="editLabel">Ändern</string>
+    <string name="deleteLabel">Löschen</string>
+    <string name="title_meal_detail">Name des Gerichts</string>
+</resources>
