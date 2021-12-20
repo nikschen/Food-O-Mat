@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.fourquestionmarks.food_o_mat.model.Meal
 
-@Database(entities = [Meal::class], version = 1, exportSchema = false)
+@Database(entities = [Meal::class], version = 2, exportSchema = false)
 abstract class FoodOMatDatabase : RoomDatabase() {
 
     abstract fun mealDao(): MealDao
