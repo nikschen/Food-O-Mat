@@ -34,12 +34,13 @@ class MealListAdapter(private val onMealClicked: (Meal) -> Unit) :
         fun bind(meal: Meal, context: Context) {
             binding.apply {
                 name.text=meal.name
-                category.text=context.resources.getString(R.string.category,meal.category)
-                calories.text=context.resources.getString(R.string.calories,meal.calories)
-                carbohydrates.text=context.resources.getString(R.string.carbohydrates,meal.carbohydrates)
-                proteins.text=context.resources.getString(R.string.proteins,meal.proteins)
-                fats.text=context.resources.getString(R.string.fats,meal.fats)
-                isVeggie.text=context.resources.getString(R.string.isVeggie,isVeggie(meal))
+                category.text=meal.category
+                calories.text=meal.calories.toString()
+                carbohydrates.text=meal.carbohydrates.toString()
+                proteins.text=meal.proteins.toString()
+                fats.text=meal.fats.toString()
+                isVeggieCheckbox.isChecked=meal.isVeggie
+                isVeganCheckbox.isChecked=meal.isVegan
             }
 
         }
