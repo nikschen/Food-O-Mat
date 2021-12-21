@@ -5,6 +5,7 @@
             <string name="title_random">Zufall</string>
             <string name="title_dashboard">Übersicht</string>
             <string name="title_search">Suche</string>
+            <string name="title_new_meal">Neues Gericht</string>
 
     <!-- common -->
         <!-- meal item -->
@@ -42,6 +43,7 @@
         <string name="new_isVegan">Vegan (möglich)?</string>
         <string name="save_meal_button_text">Speichern</string>
     <string name="exampleMealPictureDescription">Beispielbild des Gerichts</string>
+    <string name="editOrDeleteMealButtonDescription">Button zum Ändern oder Löschen des Gerichts</string>
 
 
 </resources>
