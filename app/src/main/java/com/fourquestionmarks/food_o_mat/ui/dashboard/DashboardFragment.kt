@@ -15,15 +15,20 @@ import com.fourquestionmarks.food_o_mat.FoodOMatApplication
 import com.fourquestionmarks.food_o_mat.R
 import com.fourquestionmarks.food_o_mat.adapter.MealListAdapter
 import com.fourquestionmarks.food_o_mat.databinding.FragmentDashboardBinding
+import com.fourquestionmarks.food_o_mat.model.Meal
 import com.fourquestionmarks.food_o_mat.ui.MealViewModel
+import com.fourquestionmarks.food_o_mat.ui.MealViewModelFactory
+import kotlin.random.Random
 
 class DashboardFragment : Fragment() {
 
-    private val viewModel: MealViewModel by activityViewModels {
-        MealViewModel.MealViewModelFactory(
-            (activity?.application as FoodOMatApplication).database.mealDao()
-        )
-    }
+//    private val viewModel: MealViewModel by activityViewModels {
+//        MealViewModel.MealViewModelFactory((activity?.application as FoodOMatApplication).database.mealDao())
+//    }
+
+    private lateinit var viewModel: MealViewModel
+    private lateinit var meal: Meal
+    private lateinit var allMeals: List<Meal>
 
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
@@ -33,37 +38,49 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //set binding to current fragment binding
+
+        viewModel= MealViewModelFactory((activity?.application as FoodOMatApplication).database.mealDao()).create(MealViewModel::class.java)
+        viewModel.allMeals.observe(this.viewLifecycleOwner) { listOfMeals ->
+            allMeals=listOfMeals
+            val randomID:Int=Random.nextInt(0,allMeals.size)
+            meal=allMeals[randomID]
+            bind(meal)
+        }
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    /**
+     * Binds views with the passed in item data.
+     */
+    private fun bind(meal: Meal) {
+        binding.mealCardInclude.apply {
+            name.text=meal.name
+            category.text=meal.category
+            calories.text=meal.calories.toString()
+            carbohydrates.text=meal.carbohydrates.toString()
+            proteins.text=meal.proteins.toString()
+            fats.text=meal.fats.toString()
+            isVeggieCheckbox.isChecked=meal.isVeggie
+            isVeganCheckbox.isChecked=meal.isVegan
+        }
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //sets adapter to the MealListAdapter, specially created to list all Meals with only some data (name, calories, isVeggie)
-        val adapter = MealListAdapter {
-            //add action to each module card that navigates to the detail view of the module
-//            val action =
-//                DashboardFragmentDirections.actionNavigationDashboardToModuleDetailFragment(it.moduleName,it.id!!) // id of the module as argument to get correct detail view data
-//            this.findNavController().navigate(action)
-        }
 
-        binding.mealList.layoutManager = LinearLayoutManager(this.context)
-        binding.mealList.adapter = adapter
 
-        // observer on the allDashboard list to update the UI automatically when the data changes.
-        viewModel.allMeals.observe(this.viewLifecycleOwner) { Meal ->
-            Meal.let {
-                adapter.submitList(it)
-            }
+        binding.mealCardInclude.mealCard.setOnClickListener {
+            val action = DashboardFragmentDirections.actionNavigationDashboardToMealDetailFragment(meal!!.name, meal!!.ID!!)
+            findNavController().navigate(action)
         }
 
         // saveMealButton to navigate to addOrUpdateModuleFragment to add new modules
         binding.addMealButton.setOnClickListener {
-//            val action = DashboardFragmentDirections.actionNavigationDashboardToNewModuleFragment(getString(
-//                R.string.title_new_module),0)
-//            findNavController().navigate(action)
+            val action = DashboardFragmentDirections.actionNavigationDashboardToAddOrUpdateMealFragment(getString(R.string.title_new_meal),0)
+            findNavController().navigate(action)
         }
     }
 }
