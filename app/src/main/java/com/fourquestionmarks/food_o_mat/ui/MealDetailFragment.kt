@@ -22,9 +22,7 @@ class MealDetailFragment : Fragment() {
     private val navigationArgs: MealDetailFragmentArgs by navArgs()
     lateinit var meal: Meal
 
-    private val viewModel: MealViewModel by activityViewModels {
-        MealViewModel.MealViewModelFactory((activity?.application as FoodOMatApplication).database.mealDao())
-    }
+    private val viewModel: MealViewModel by activityViewModels {MealViewModelFactory((activity?.application as FoodOMatApplication).database.mealDao())}
 
     private var _binding: FragmentMealDetailBinding? = null
     private val binding get() = _binding!!
@@ -43,12 +41,13 @@ class MealDetailFragment : Fragment() {
      */
     private fun bind(meal: Meal) {
         binding.apply {
-            name.setText(meal.name, TextView.BufferType.SPANNABLE)
             category.setText(meal.category, TextView.BufferType.SPANNABLE)
             calories.setText(meal.calories.toString(), TextView.BufferType.SPANNABLE)
             carbohydrates.setText(meal.carbohydrates.toString(), TextView.BufferType.SPANNABLE)
             proteins.setText(meal.proteins.toString(), TextView.BufferType.SPANNABLE)
             fats.setText(meal.fats.toString(), TextView.BufferType.SPANNABLE)
+            isVeggieCheckbox.isChecked=meal.isVeggie
+            isVeganCheckbox.isChecked=meal.isVegan
 //            deleteMeal.setOnClickListener { showConfirmationDialog() }
 //            editMeal.setOnClickListener { editMeal() }
         }

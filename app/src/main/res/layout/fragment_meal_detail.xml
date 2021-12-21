@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context=".ui.dashboard.DashboardFragment">
-
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="226dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/exampleMealPictureDescription"
+            android:scaleType="centerCrop"
+            android:src="@drawable/example_meal_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mealOfTheDayHeader" />
 
         <TextView
             android:id="@+id/name"
@@ -25,75 +34,236 @@ tools:context=".ui.dashboard.DashboardFragment">
             android:layout_height="wrap_content"
             android:padding="4dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             tools:text="Name" />
 
-        <TextView
-            android:id="@+id/category"
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name"
-            tools:text="Kategorie" />
+            android:layout_height="match_parent"
+            android:stretchColumns="1">
 
-        <TextView
-            android:id="@+id/calories"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/category"
-            tools:text="Kalorien" />
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:duplicateParentState="false"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/carbohydrates"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/calories"
-            tools:text="Kohlenhydrate" />
+                <TextView
+                    android:id="@+id/categoryLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="@string/category"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-        <TextView
-            android:id="@+id/proteins"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/carbohydrates"
-            tools:text="Eiweiß" />
+                <TextView
+                    android:id="@+id/category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:padding="4dp"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    tools:text="One-Pot" />
+            </TableRow>
 
-        <TextView
-            android:id="@+id/fats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/proteins"
-            tools:text="Fett" />
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:duplicateParentState="false"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/isVeggie"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fats"
-            tools:text="Vegetarisch?" />
+                <TextView
+                    android:id="@+id/caloriesLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="@string/calories"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <TextView
+                    android:id="@+id/calories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:padding="4dp"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    tools:text="123,4" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:duplicateParentState="false"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/carbohydratesLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="@string/carbohydrates"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <TextView
+                    android:id="@+id/carbohydrates"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:padding="4dp"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    tools:text="45,6" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:duplicateParentState="false"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/proteinsLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="@string/proteins"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <TextView
+                    android:id="@+id/proteins"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:padding="4dp"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    tools:text="12,3" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:duplicateParentState="false"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/fatsLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="@string/fats"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <TextView
+                    android:id="@+id/fats"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:padding="4dp"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    tools:text="45,6" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:duplicateParentState="false"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/isVeggieLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="@string/isVeggie"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <CheckBox
+                    android:id="@+id/isVeggieCheckbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:duplicateParentState="false"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/isVeganLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="@string/isVegan"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <CheckBox
+                    android:id="@+id/isVeganCheckbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp" />
+            </TableRow>
+        </TableLayout>
+
     </LinearLayout>
+
+    <com.nambimobile.widgets.efab.ExpandableFabLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.nambimobile.widgets.efab.Overlay
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.nambimobile.widgets.efab.ExpandableFab
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:contentDescription="@string/editOrDeleteMealButtonDescription"
+            app:efab_color="?attr/colorSecondary"
+            app:efab_fabOptionPosition="above"
+            app:efab_orientation="portrait" />
+
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/editMeal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_color="?attr/colorSecondaryVariant"
+            app:label_text="@string/editLabel"
+            app:fab_icon="@drawable/ic_baseline_edit_24"
+            android:tint="@color/white"
+            app:label_textColor="?attr/colorOnPrimary"/>
+
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/deleteMeal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_color="?attr/colorSecondaryVariant"
+            app:label_text="@string/deleteLabel"
+            app:fab_icon="@drawable/ic_baseline_delete_24"
+            android:tint="@color/white"
+            app:label_textColor="?attr/colorOnPrimary"/>
+
+    </com.nambimobile.widgets.efab.ExpandableFabLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
