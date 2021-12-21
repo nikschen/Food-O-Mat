@@ -17,9 +17,7 @@ import com.fourquestionmarks.food_o_mat.model.Meal
 
 
 class AddOrUpdateMealFragment : Fragment() {
-    private val viewModel: MealViewModel by activityViewModels {
-        MealViewModel.MealViewModelFactory((activity?.application as FoodOMatApplication).database.mealDao())
-    }
+    private val viewModel: MealViewModel by activityViewModels {MealViewModelFactory((activity?.application as FoodOMatApplication).database.mealDao())}
     private val navigationArgs: AddOrUpdateMealFragmentArgs by navArgs()
 
     lateinit var meal: Meal
@@ -60,9 +58,12 @@ class AddOrUpdateMealFragment : Fragment() {
             carbohydrates.setText(meal.carbohydrates.toString(), TextView.BufferType.SPANNABLE)
             proteins.setText(meal.proteins.toString(), TextView.BufferType.SPANNABLE)
             fats.setText(meal.fats.toString(), TextView.BufferType.SPANNABLE)
+            veggieCheckbox.isChecked=meal.isVeggie
+            veganCheckbox.isChecked=meal.isVegan
             saveMealButton.setOnClickListener { updateMeal() }
         }
     }
+
 
     /**
      * Inserts the new Meal into database and navigates up to list fragment.
@@ -72,13 +73,14 @@ class AddOrUpdateMealFragment : Fragment() {
             viewModel.insertMeal(
                 Meal(
                     ID=null,
-                    name=binding.mealName.toString(),
-                    category=binding.category.toString(),
-                    calories=binding.calories.toString().toFloat(),
-                    carbohydrates=binding.carbohydrates.toString().toFloat(),
-                    proteins=binding.proteins.toString().toFloat(),
-                    fats=binding.fats.toString().toFloat(),
-                    isVeggie=binding.veggieSwitch.isChecked,
+                    name=binding.mealName.text.toString(),
+                    category=binding.category.text.toString(),
+                    calories=binding.calories.text.toString().replace(',','.').toFloat(),
+                    carbohydrates=binding.carbohydrates.text.toString().replace(',','.').toFloat(),
+                    proteins=binding.proteins.text.toString().replace(',','.').toFloat(),
+                    fats=binding.fats.text.toString().replace(',','.').toFloat(),
+                    isVeggie=binding.veggieCheckbox.isChecked,
+                    isVegan=binding.veganCheckbox.isChecked,
                 )
             )
             viewModel.getLastInsertedMeal().observe(this.viewLifecycleOwner) { selectedMeal ->
@@ -91,19 +93,20 @@ class AddOrUpdateMealFragment : Fragment() {
     }
 
     /**
-     * Updates an existing Meal in the database and navigates up to list fragment.
+     * Updates an existing Meal in the database and navigates to MealDetailFragment of the updated meal.
      */
     private fun updateMeal() {
         if (isValid()) {
             viewModel.updateMeal(
                 Meal(
-                    name=binding.mealName.toString(),
-                    category=binding.category.toString(),
-                    calories=binding.calories.toString().toFloat(),
-                    carbohydrates=binding.carbohydrates.toString().toFloat(),
-                    proteins=binding.proteins.toString().toFloat(),
-                    fats=binding.fats.toString().toFloat(),
-                    isVeggie=binding.veggieSwitch.isChecked,
+                    name=binding.mealName.text.toString(),
+                    category=binding.category.text.toString(),
+                    calories=binding.calories.text.toString().replace(',','.').toFloat(),
+                    carbohydrates=binding.carbohydrates.text.toString().replace(',','.').toFloat(),
+                    proteins=binding.proteins.text.toString().replace(',','.').toFloat(),
+                    fats=binding.fats.text.toString().replace(',','.').toFloat(),
+                    isVeggie=binding.veggieCheckbox.isChecked,
+                    isVegan=binding.veganCheckbox.isChecked,
                 )
             )
 
