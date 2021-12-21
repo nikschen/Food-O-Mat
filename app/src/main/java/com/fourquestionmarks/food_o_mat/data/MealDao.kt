@@ -7,14 +7,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MealDao
 {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(meal: Meal)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insert(meal: Meal)
 
     @Delete
-    fun delete(meal: Meal)
+    suspend fun delete(meal: Meal)
 
     @Update
-    fun update(meal: Meal)
+    suspend fun update(meal: Meal)
 
     @Query("SELECT * FROM meals where id= :ID")
     fun getMealByID(ID:Int):Flow<Meal>
@@ -24,4 +24,5 @@ interface MealDao
 
     @Query("SELECT * FROM meals WHERE id=(SELECT MAX(id) from meals) order by id DESC ")
     fun getLastInsertedMeal():Flow<Meal>
+
 }
