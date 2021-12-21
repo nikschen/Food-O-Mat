@@ -36,7 +36,8 @@
     <fragment
         android:id="@+id/addOrUpdateMealFragment"
         android:name="com.fourquestionmarks.food_o_mat.ui.AddOrUpdateMealFragment"
-        android:label="fragment_add_or_update_meal"
+        android:label="{title}"
+        tools:label="Name des Gerichts ändern | neues Gericht"
         tools:layout="@layout/fragment_add_or_update_meal" >
         <argument
             android:name="title"
@@ -51,7 +52,8 @@
     <fragment
         android:id="@+id/mealDetailFragment"
         android:name="com.fourquestionmarks.food_o_mat.ui.MealDetailFragment"
-        android:label="@string/title_meal_detail"
+        android:label="{title}"
+        tools:label="Name des Gerichts"
         tools:layout="@layout/fragment_meal_detail">
         <argument
             android:name="title"
