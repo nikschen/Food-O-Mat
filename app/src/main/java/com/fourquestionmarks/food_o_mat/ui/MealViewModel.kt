@@ -54,9 +54,7 @@ class MealViewModel(private val mealDao: MealDao) : ViewModel() {
     /**
      * Get amount of meals in database
      */
-    fun getMealCount():Int{
-        return mealDao.getMealCount()
-    }
+
 
     /**
      * Returns true if the EditTexts are not empty
