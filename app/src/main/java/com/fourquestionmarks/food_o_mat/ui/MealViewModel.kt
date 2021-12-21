@@ -11,34 +11,7 @@ class MealViewModel(private val mealDao: MealDao) : ViewModel() {
     val allMeals: LiveData<List<Meal>> = mealDao.getMeals().asLiveData()
 
     /**
-     * Updates an existing _root_ide_package_.com.fourquestionmarks.food_o_mat.model.Meal in the database.
-     */
-    fun updateMeal(
-        ID: Int,
-        name: String,
-        category: String,
-        calories: Float,
-        carbohydrates: Float,
-        proteins: Float,
-        fats: Float,
-        isVeggie: Boolean
-    ) {
-        val updatedMeal = Meal(
-            ID = ID,
-            name = name,
-            category = category,
-            calories = calories,
-            carbohydrates = carbohydrates,
-            proteins = proteins,
-            fats = fats,
-            isVeggie = isVeggie
-        )
-        updateMeal(updatedMeal)
-    }
-
-
-    /**
-     * Launching a new coroutine to update an meal_card in a non-blocking way
+     * Launching a new coroutine to update a [Meal] in a non-blocking way
      */
     fun updateMeal(meal: Meal) {
         viewModelScope.launch {
@@ -46,33 +19,8 @@ class MealViewModel(private val mealDao: MealDao) : ViewModel() {
         }
     }
 
-
     /**
-     * Inserts the new Meal into database.
-     */
-    fun addNewMeal(
-        name: String,
-        category: String,
-        calories: Float,
-        carbohydrates: Float,
-        proteins: Float,
-        fats: Float,
-        isVeggie: Boolean
-    ) {
-        val newMeal = Meal(
-            name = name,
-            category = category,
-            calories = calories,
-            carbohydrates = carbohydrates,
-            proteins = proteins,
-            fats = fats,
-            isVeggie = isVeggie
-        )
-        updateMeal(newMeal)
-    }
-
-    /**
-     * Launching a new coroutine to insert an meal_card in a non-blocking way
+     * Launching a new coroutine to insert a [Meal] in a non-blocking way
      */
     fun insertMeal(meal: Meal) {
         viewModelScope.launch {
@@ -81,7 +29,7 @@ class MealViewModel(private val mealDao: MealDao) : ViewModel() {
     }
 
     /**
-     * Launching a new coroutine to delete an meal_card in a non-blocking way
+     * Launching a new coroutine to delete a [Meal] in a non-blocking way
      */
     fun deleteMeal(meal: Meal) {
         viewModelScope.launch {
@@ -90,20 +38,31 @@ class MealViewModel(private val mealDao: MealDao) : ViewModel() {
     }
 
     /**
-     * Retrieve an meal_card from the repository.
+     * Retrieve a specific [Meal] from the database.
      */
     fun getMealById(id: Int): LiveData<Meal> {
         return mealDao.getMealByID(id).asLiveData()
     }
 
+    /**
+     * Get ID of last inserted meal
+     */
     fun getLastInsertedMeal():LiveData<Meal>{
         return mealDao.getLastInsertedMeal().asLiveData()
+    }
+
+    /**
+     * Get amount of meals in database
+     */
+    fun getMealCount():Int{
+        return mealDao.getMealCount()
     }
 
     /**
      * Returns true if the EditTexts are not empty
      */
     fun isValid(mealName: String, mealPrice: String, mealCount: String): Boolean {
+        //TODO: sinnvolle Prüfung
 //        if (mealName.isBlank() || mealPrice.isBlank() || mealCount.isBlank()) {
 //            return false
 //        }
@@ -111,16 +70,18 @@ class MealViewModel(private val mealDao: MealDao) : ViewModel() {
     }
 
 
-    /**
-     * Factory class to instantiate the [ViewModel] instance.
-     */
-    class MealViewModelFactory(private val mealDao: MealDao) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(MealViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return MealViewModel(mealDao) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
+
+}
+
+/**
+ * Factory class to instantiate the [ViewModel] instance.
+ */
+class MealViewModelFactory(private val mealDao: MealDao) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(MealViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return MealViewModel(mealDao) as T
         }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
