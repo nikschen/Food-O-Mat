@@ -32,7 +32,7 @@ class SearchFragment : Fragment() {
 
         val textView: TextView = binding.textNotifications
 //        searchViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
+//            mealCategory.text = it
 //        })
         return root
     }

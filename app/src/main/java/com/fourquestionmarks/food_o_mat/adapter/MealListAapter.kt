@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fourquestionmarks.food_o_mat.R
-import com.fourquestionmarks.food_o_mat.databinding.MealCardBinding
+import com.fourquestionmarks.food_o_mat.databinding.MealCardFullBinding
 import com.fourquestionmarks.food_o_mat.model.Meal
 
 class MealListAdapter(private val onMealClicked: (Meal) -> Unit) :
@@ -18,7 +18,7 @@ class MealListAdapter(private val onMealClicked: (Meal) -> Unit) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealViewHolder {
         val view = LayoutInflater.from(parent.context)
         context=parent.context
-        return MealViewHolder(MealCardBinding.inflate(view,parent,false))
+        return MealViewHolder(MealCardFullBinding.inflate(view,parent,false))
     }
 
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
@@ -29,7 +29,7 @@ class MealListAdapter(private val onMealClicked: (Meal) -> Unit) :
         holder.bind(current,context)
     }
 
-    class MealViewHolder(private var binding: MealCardBinding) :
+    class MealViewHolder(private var binding: MealCardFullBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(meal: Meal, context: Context) {
             binding.apply {
@@ -45,11 +45,7 @@ class MealListAdapter(private val onMealClicked: (Meal) -> Unit) :
 
         }
 
-        private fun isVeggie(meal: Meal): String
-        {
-            if (meal.isVeggie) return "Ja"
-            else return "Nein"
-        }
+
     }
 
 

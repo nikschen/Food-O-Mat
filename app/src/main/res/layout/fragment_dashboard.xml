@@ -35,7 +35,7 @@
 
     <include
         android:id="@+id/mealCardInclude"
-        layout="@layout/meal_card"
+        layout="@layout/meal_card_full"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

@@ -48,8 +48,8 @@ class MealDetailFragment : Fragment() {
             fats.setText(meal.fats.toString(), TextView.BufferType.SPANNABLE)
             isVeggieCheckbox.isChecked=meal.isVeggie
             isVeganCheckbox.isChecked=meal.isVegan
-//            deleteMeal.setOnClickListener { showConfirmationDialog() }
-//            editMeal.setOnClickListener { editMeal() }
+            deleteMeal.setOnClickListener { showConfirmationDialog() }
+            editMeal.setOnClickListener { editMeal() }
         }
     }
 
@@ -65,15 +65,15 @@ class MealDetailFragment : Fragment() {
      * Displays an alert dialog to get the user's confirmation before deleting the item.
      */
     private fun showConfirmationDialog() {
-//        MaterialAlertDialogBuilder(requireContext())
-//            .setTitle(getString(android.R.string.dialog_alert_title))
-//            .setMessage(getString(R.string.delete_question))
-//            .setCancelable(false)
-//            .setNegativeButton(getString(R.string.no)) { _, _ -> }
-//            .setPositiveButton(getString(R.string.yes)) { _, _ ->
-//                deleteMeal()
-//            }
-//            .show()
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.delete_dialog_title))
+            .setMessage(getString(R.string.delete_question))
+            .setCancelable(true)
+            .setNegativeButton(getString(R.string.no)) { _, _ -> }
+            .setPositiveButton(getString(R.string.yes)) { _, _ ->
+                deleteMeal()
+            }
+            .show()
     }
 
     /**

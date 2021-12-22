@@ -14,5 +14,6 @@
         <!-- Customize your theme here. -->
         <item name="backgroundTint">?dashboardMaterialCardColor</item>
         <item name="dashboardMaterialCardColor">@color/white</item>
+        <item name="contrastTextColor">@color/black</item>
     </style>
 </resources>

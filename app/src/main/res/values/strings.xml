@@ -8,7 +8,11 @@
             <string name="title_new_meal">Neues Gericht</string>
 
     <!-- common -->
-        <!-- meal item -->
+    <string name="no">Nein</string>
+    <string name="yes">Ja</string>
+
+
+    <!-- meal item -->
             <string name="category">Kategorie:</string>
             <string name="calories">Kalorien:</string>
             <string name="carbohydrates">Kohlenhydrate:</string>
@@ -20,8 +24,8 @@
     <!--meal detail fragment-->
         <string name="editLabel">Ändern</string>
         <string name="deleteLabel">Löschen</string>
-
-
+        <string name="delete_question">Gericht %1$s wirklich löschen?</string>
+        <string name="delete_dialog_title">Achtung</string>
 
     <!--random tab-->
         <string name="randomMealButtonLabel">Zufälliges Gericht anzeigen</string>
@@ -44,6 +48,8 @@
         <string name="save_meal_button_text">Speichern</string>
     <string name="exampleMealPictureDescription">Beispielbild des Gerichts</string>
     <string name="editOrDeleteMealButtonDescription">Button zum Ändern oder Löschen des Gerichts</string>
+    <string name="isVeganLabelDescription">Ist das Gericht Vegan?</string>
+    <string name="isVeggieLabelDescription">Ist das Gericht vegetarisch?</string>
 
 
 </resources>
