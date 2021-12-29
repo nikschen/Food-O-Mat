@@ -67,7 +67,7 @@ class MealDetailFragment : Fragment() {
     private fun showConfirmationDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.delete_dialog_title))
-            .setMessage(getString(R.string.delete_question))
+            .setMessage(getString(R.string.delete_question,meal.name))
             .setCancelable(true)
             .setNegativeButton(getString(R.string.no)) { _, _ -> }
             .setPositiveButton(getString(R.string.yes)) { _, _ ->

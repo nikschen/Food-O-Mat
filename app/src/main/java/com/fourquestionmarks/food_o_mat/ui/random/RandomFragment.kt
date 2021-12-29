@@ -1,15 +1,12 @@
 package com.fourquestionmarks.food_o_mat.ui.random
 
 import android.os.Bundle
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doBeforeTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -26,7 +23,6 @@ import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
 /**
@@ -243,8 +239,8 @@ class RandomFragment : Fragment() {
                 // add the checked category to checkedCategories list
                 checkedCategories += categories[which]
             }
-            .setPositiveButton("ok") { _, _ -> setWantedAndCheckedCategories(checkedCategories, choicesInitial) }
-            .setNegativeButton("Cancel") { _, _ -> }
+            .setPositiveButton(getString(R.string.ok)) { _, _ -> setWantedAndCheckedCategories(checkedCategories, choicesInitial) }
+            .setNegativeButton(getString(R.string.cancel)) { _, _ -> }
             .show()
     }
 

@@ -6,11 +6,20 @@
             <string name="title_dashboard">Übersicht</string>
             <string name="title_search">Suche</string>
             <string name="title_new_meal">Neues Gericht</string>
+            <string name="title_results">Ergebnisse</string>
 
     <!-- common -->
     <string name="no">Nein</string>
     <string name="yes">Ja</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="ok">Okay</string>
 
+    <string name="categories">Kategorien</string>
+    <string name="noMealWithParamsAvailableToast">Kein Gericht zu diesen Kriterien verfügbar</string>
+    <string name="caloriesToLowError">Zu niedriger Wert für das Kalorienminimum</string>
+    <string name="caloriesToHighError">Zu hoher Wert für das Kalorienmaximum</string>
+    <string name="caloriesEmptyError">Kalorienangabe fehlt</string>
+    <string name="caloriesFormatError">Falsches Zahlenformat</string>
 
     <!-- meal item -->
             <string name="category">Kategorie:</string>
@@ -46,16 +55,14 @@
         <string name="new_isVeggie">Vegetarisch (möglich)?</string>
         <string name="new_isVegan">Vegan (möglich)?</string>
         <string name="save_meal_button_text">Speichern</string>
+
+    <!--Descriptions for accessibility-->
     <string name="exampleMealPictureDescription">Beispielbild des Gerichts</string>
     <string name="editOrDeleteMealButtonDescription">Button zum Ändern oder Löschen des Gerichts</string>
     <string name="isVeganLabelDescription">Ist das Gericht Vegan?</string>
     <string name="isVeggieLabelDescription">Ist das Gericht vegetarisch?</string>
-    <string name="categories">Kategorien</string>
-    <string name="noMealWithParamsAvailableToast">Kein Gericht zu diesen Kriterien verfügbar</string>
-    <string name="caloriesToLowError">Zu niedriger Wert für das Kalorienminimum</string>
-    <string name="caloriesToHighError">Zu hoher Wert für das Kalorienmaximum</string>
-    <string name="caloriesEmptyError">Kalorienangabe fehlt</string>
-    <string name="caloriesFormatError">Falsches Zahlenformat</string>
+
+
 
 
 </resources>
