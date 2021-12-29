@@ -52,9 +52,25 @@ class MealViewModel(private val mealDao: MealDao) : ViewModel() {
     }
 
     /**
-     * Get amount of meals in database
+     * Get all distinct categories stored in database
      */
+    fun getAllCategories():List<String>{
+        return mealDao.getAllCategories()
+    }
 
+    /**
+     * Get lowest calorie score of all meals stored in database
+     */
+    fun getLowestCalorieScore():Float{
+        return mealDao.getLowestCalorieScore()
+    }
+
+    /**
+     * Get highest calorie score of all meals stored in database
+     */
+    fun getHighestCalorieScore():Float{
+        return mealDao.getHighestCalorieScore()
+    }
 
     /**
      * Returns true if the EditTexts are not empty

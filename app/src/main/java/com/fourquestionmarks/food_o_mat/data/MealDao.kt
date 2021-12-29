@@ -25,4 +25,12 @@ interface MealDao
     @Query("SELECT * FROM meals WHERE id=(SELECT MAX(id) from meals) order by id DESC ")
     fun getLastInsertedMeal():Flow<Meal>
 
+    @Query("SELECT MIN(calories) FROM meals")
+    fun getLowestCalorieScore(): Float
+
+    @Query("SELECT MAX(calories) FROM meals")
+    fun getHighestCalorieScore(): Float
+
+    @Query("SELECT DISTINCT category from meals")
+    fun getAllCategories():List<String>
 }

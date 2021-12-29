@@ -22,10 +22,6 @@ import kotlin.random.Random
 
 class DashboardFragment : Fragment() {
 
-//    private val viewModel: MealViewModel by activityViewModels {
-//        MealViewModel.MealViewModelFactory((activity?.application as FoodOMatApplication).database.mealDao())
-//    }
-
     private lateinit var viewModel: MealViewModel
     private lateinit var meal: Meal
     private lateinit var allMeals: List<Meal>
@@ -42,9 +38,16 @@ class DashboardFragment : Fragment() {
         viewModel= MealViewModelFactory((activity?.application as FoodOMatApplication).database.mealDao()).create(MealViewModel::class.java)
         viewModel.allMeals.observe(this.viewLifecycleOwner) { listOfMeals ->
             allMeals=listOfMeals
-            val randomID:Int=Random.nextInt(0,allMeals.size)
-            meal=allMeals[randomID]
-            bind(meal)
+            if(allMeals.size>0)
+            {
+                val randomID:Int=Random.nextInt(0,allMeals.size)
+                meal=allMeals[randomID]
+                bind(meal)
+                binding.mealCardInclude.mealCard.setOnClickListener {
+                    val action = DashboardFragmentDirections.actionNavigationDashboardToMealDetailFragment(meal!!.name, meal!!.ID!!)
+                    findNavController().navigate(action)
+                }
+            }
         }
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         return binding.root
@@ -70,14 +73,7 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-        binding.mealCardInclude.mealCard.setOnClickListener {
-            val action = DashboardFragmentDirections.actionNavigationDashboardToMealDetailFragment(meal!!.name, meal!!.ID!!)
-            findNavController().navigate(action)
-        }
-
-        // saveMealButton to navigate to addOrUpdateModuleFragment to add new modules
+        // addMealButton to navigate to addOrUpdateModuleFragment to add new modules
         binding.addMealButton.setOnClickListener {
             val action = DashboardFragmentDirections.actionNavigationDashboardToAddOrUpdateMealFragment(getString(R.string.title_new_meal),0)
             findNavController().navigate(action)

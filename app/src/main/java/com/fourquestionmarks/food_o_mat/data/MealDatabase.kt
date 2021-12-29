@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
 
-@Database(entities = [Meal::class], version = 2, exportSchema = false)
+@Database(entities = [Meal::class], version = 3, exportSchema = false)
 abstract class FoodOMatDatabase : RoomDatabase() {
 
     abstract fun mealDao(): MealDao
@@ -56,7 +56,9 @@ abstract class FoodOMatDatabase : RoomDatabase() {
         // prefilling database functions for each entity
         suspend fun populateDatabaseWithMeals(mealDao: MealDao) {
 
-            val meal = Meal(0, "Testname", "Auflauf", 123.4f, 43.21f, 12.3f, 10.5f, true, false)
+            var meal = Meal(0, "Testname", "Auflauf", 123.4f, 43.21f, 12.3f, 10.5f, true, false)
+            mealDao.insert(meal)
+            meal = Meal(1, "Testname2", "Auflauf", 1234.5f, 43.21f, 12.3f, 10.5f, true, true)
             mealDao.insert(meal)
         }
     }

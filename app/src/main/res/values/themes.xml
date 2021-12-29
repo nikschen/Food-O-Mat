@@ -15,5 +15,6 @@
         <item name="backgroundTint">?dashboardMaterialCardColor</item>
         <item name="dashboardMaterialCardColor">@color/white</item>
         <item name="contrastTextColor">@color/black</item>
+        <item name="colorSecondaryWeakened">@color/colorSecondaryWeakened</item>
     </style>
 </resources>

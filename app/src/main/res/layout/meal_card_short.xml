@@ -63,6 +63,18 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
             android:contentDescription="@string/isVeganLabelDescription"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/veganicon" />
+
+        <ImageView
+            android:id="@+id/veganLabelEmpty"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="@string/isVeganLabelDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/empty_circle"
@@ -75,10 +87,24 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
             android:contentDescription="@string/isVeggieLabelDescription"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toStartOf="@+id/veganLabel"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/veggieicon"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/veggieLabelEmpty"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="@string/isVeggieLabelDescription"
             app:layout_constraintEnd_toStartOf="@+id/veganLabel"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/empty_circle"
-            app:tint="?attr/contrastTextColor" />
+            app:tint="?attr/contrastTextColor"
+            tools:visibility="invisible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
