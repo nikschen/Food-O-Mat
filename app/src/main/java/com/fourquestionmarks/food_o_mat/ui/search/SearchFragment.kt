@@ -212,6 +212,16 @@ class SearchFragment : Fragment() {
             }
         }
 
+        //an onClickListener that checks if veggieCheckbox is ticked, otherwise veganCheckbox is unticked because of logical reasons
+        binding.veggieCheckbox.setOnClickListener{
+            if(!binding.veggieCheckbox.isChecked) binding.veganCheckbox.isChecked=false
+        }
+
+        //an onClickListener that checks if veganCheckbox is ticked and if so, veggieCheckbox is ticked too because of logical reasons
+        binding.veganCheckbox.setOnClickListener{
+            if(binding.veganCheckbox.isChecked) binding.veggieCheckbox.isChecked=true
+        }
+
         //trigger for the category selection popup
         binding.categorySelectionTrigger.setOnClickListener {chooseCategoryDialog()}
         //button to start the search
@@ -269,10 +279,11 @@ class SearchFragment : Fragment() {
     private fun startSearch()
     {
         viewModel.allMeals.observe(this.viewLifecycleOwner) { allMeals ->
-            val filteredByName: List<Meal> = if(!binding.mealNameInput.text.isNullOrEmpty()) allMeals.filter{ meal -> meal.name==binding.mealNameInput.text.toString()} else allMeals
+            val filteredByName: List<Meal> = if(!binding.mealNameInput.text.isNullOrEmpty()) allMeals.filter{ meal -> meal.name.contains(binding.mealNameInput.text.toString())} else allMeals
             val filteredByIsVeggie: List<Meal> = if(binding.veggieCheckbox.isChecked) filteredByName.filter { meal -> meal.isVeggie} else filteredByName
             val filteredByIsVegan: List<Meal> = if(binding.veganCheckbox.isChecked) filteredByIsVeggie.filter { meal -> meal.isVegan} else filteredByIsVeggie
-            val filteredByCalories: List<Meal> = if(wantedCategories.isNotEmpty()) filteredByIsVegan.filter { meal -> meal.calories>=binding.caloriesSlider.values[0] && meal.calories<=binding.caloriesSlider.values[1]} else filteredByIsVegan
+            val filteredByCategories: List<Meal> = if(wantedCategories.isNotEmpty()) filteredByIsVegan.filter { meal -> wantedCategories.contains(meal.category)} else filteredByIsVegan
+            val filteredByCalories: List<Meal> = filteredByCategories.filter { meal -> meal.calories.roundToInt()>=binding.caloriesSlider.values[0].roundToInt() && meal.calories.roundToInt()<=binding.caloriesSlider.values[1].roundToInt()}
 
             if(filteredByCalories.isNullOrEmpty())
             {

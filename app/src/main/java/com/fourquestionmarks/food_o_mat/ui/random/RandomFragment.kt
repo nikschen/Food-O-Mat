@@ -215,6 +215,16 @@ class RandomFragment : Fragment() {
             }
         }
 
+        //an onClickListener that checks if veggieCheckbox is ticked, otherwise veganCheckbox is unticked because of logical reasons
+        binding.veggieCheckbox.setOnClickListener{
+            if(!binding.veggieCheckbox.isChecked) binding.veganCheckbox.isChecked=false
+        }
+
+        //an onClickListener that checks if veganCheckbox is ticked and if so, veggieCheckbox is ticked too because of logical reasons
+        binding.veganCheckbox.setOnClickListener{
+            if(binding.veganCheckbox.isChecked) binding.veggieCheckbox.isChecked=true
+        }
+
         //trigger for the category selection popup
         binding.categorySelectionTrigger.setOnClickListener {chooseCategoryDialog()}
         //button to start the search
@@ -274,7 +284,7 @@ class RandomFragment : Fragment() {
         viewModel.allMeals.observe(this.viewLifecycleOwner) { allMeals ->
             val filteredByIsVeggie: List<Meal> = if(binding.veggieCheckbox.isChecked) allMeals.filter { meal -> meal.isVeggie} else allMeals
             val filteredByIsVegan: List<Meal> = if(binding.veganCheckbox.isChecked) filteredByIsVeggie.filter { meal -> meal.isVegan} else filteredByIsVeggie
-            val filteredByCalories: List<Meal> = if(wantedCategories.isNotEmpty()) filteredByIsVegan.filter { meal -> meal.calories>=binding.caloriesSlider.values[0] && meal.calories<=binding.caloriesSlider.values[1]} else filteredByIsVegan
+            val filteredByCalories: List<Meal> = if(wantedCategories.isNotEmpty()) filteredByIsVegan.filter { meal -> meal.calories.roundToInt()>=binding.caloriesSlider.values[0].roundToInt() && meal.calories.roundToInt()<=binding.caloriesSlider.values[1].roundToInt()} else filteredByIsVegan
 
             if(filteredByCalories.isNullOrEmpty())
             {
