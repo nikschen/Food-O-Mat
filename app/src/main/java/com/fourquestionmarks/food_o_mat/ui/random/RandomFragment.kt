@@ -29,7 +29,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
-
+/**
+ * [Fragment] that displays one random [Meal] according to user defined params if provided or any meal of the database if no params given
+ * implements a Rangeslider for a range of calories, as well as veggie and vegan checkboxes and selectable categories
+ * */
 class RandomFragment : Fragment() {
 
     private lateinit var viewModel: MealViewModel
@@ -41,7 +44,6 @@ class RandomFragment : Fragment() {
     private var wantedCategories: List<String> = mutableListOf<String>()
     private var initialTickedCategories:BooleanArray=BooleanArray(0)
     private lateinit var meal: Meal
-    private var initialValuesSet=false
     private var newValueIsValid=false
 
     private var _binding: FragmentRandomBinding? = null
@@ -53,6 +55,7 @@ class RandomFragment : Fragment() {
         binding.caloriesSlider.valueFrom=lowestPossibleCalorieScore
         binding.caloriesSlider.valueTo=highestPossibleCalorieScore
 
+        //get lowest and highest calorie score out of the database
         lifecycleScope.launch {
             val getLowestScore = async(Dispatchers.IO) {
                 viewModel.getLowestCalorieScore().let {
@@ -66,12 +69,13 @@ class RandomFragment : Fragment() {
             }
             getLowestScore.await() // wait for result of I/O operation without blocking the main thread
             getHighestScore.await() // wait for result of I/O operation without blocking the main thread
+            //set lowest and highest calorie scores as default values on the rangeslider and direct inputs
             binding.caloriesSlider.setValues(lowestCalorieScore.roundToInt().toFloat(),highestCalorieScore.roundToInt().toFloat())
             binding.minCaloriesDirectInput.setText(lowestCalorieScore.roundToInt().toString())
             binding.maxCaloriesDirectInput.setText(highestCalorieScore.roundToInt().toString())
-            initialValuesSet=true
         }
 
+        //get all available cateogies out of the database for the section pop up
         lifecycleScope.launch {
             val operation = async(Dispatchers.IO) {
                 viewModel.getAllCategories().let {
@@ -83,12 +87,16 @@ class RandomFragment : Fragment() {
         }
 
 
-            return binding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //initial check to enable the search button while no input was made
+        checkParams()
+
+        //on change listener for only user inferred changes to the rangeslider values, copies the changes to the corresponding direct inputs
         binding.caloriesSlider.addOnChangeListener { slider, values, fromUser ->
 
             if(fromUser)
@@ -99,17 +107,18 @@ class RandomFragment : Fragment() {
             }
         }
 
+        //an on text change listener that validates the input before letting the text change happen to ensure valid values and no crashes
         binding.minCaloriesDirectInput.doOnTextChanged { value, _, _, _ ->
 
             when {
-                value.isNullOrEmpty() -> {
+                value.isNullOrEmpty() -> { //filter for null or empty values
                     newValueIsValid=false
                     binding.getRandomMealButton.isEnabled=false
                     binding.caloriesError.text = getString(R.string.caloriesEmptyError)
                     binding.caloriesError.visibility=View.VISIBLE
                     binding.minCaloriesDirectInput.setHintTextColor(getColor(requireContext(),R.color.design_default_color_error))
                 }
-                value.toString().toFloatOrNull() == null -> {
+                value.toString().toFloatOrNull() == null -> { //filter for not valid float values
                     newValueIsValid=false
                     binding.getRandomMealButton.isEnabled=false
                     binding.caloriesError.text = getString(R.string.caloriesFormatError)
@@ -120,15 +129,14 @@ class RandomFragment : Fragment() {
                 else -> {
                     val actualFloatValue=value.toString().toFloat().roundToInt().toFloat()
                     when {
-                        actualFloatValue<lowestPossibleCalorieScore -> {
+                        actualFloatValue<lowestPossibleCalorieScore -> { //filter for too low values
                             newValueIsValid=false
                             binding.getRandomMealButton.isEnabled=false
                             binding.caloriesError.text = getString(R.string.caloriesToLowError)
                             binding.minCaloriesDirectInput.setTextColor(getColor(requireContext(),R.color.design_default_color_error))
                             binding.caloriesError.visibility=View.VISIBLE
                         }
-                        actualFloatValue>highestPossibleCalorieScore
-                        -> {
+                        actualFloatValue>highestPossibleCalorieScore -> { //filter for too high values
                             newValueIsValid=false
                             binding.getRandomMealButton.isEnabled=false
                             binding.caloriesError.text = getString(R.string.caloriesToHighError)
@@ -145,16 +153,17 @@ class RandomFragment : Fragment() {
             }
         }
 
+        //an on text change listener that validates the input before letting the text change happen to ensure valid values and no crashes
         binding.maxCaloriesDirectInput.doOnTextChanged { value, _, _, _ ->
                         when {
-                value.isNullOrEmpty() -> {
+                value.isNullOrEmpty() -> { //filter for null or empty values
                     newValueIsValid=false
                     binding.getRandomMealButton.isEnabled=false
                     binding.caloriesError.text = getString(R.string.caloriesEmptyError)
                     binding.caloriesError.visibility=View.VISIBLE
                     binding.maxCaloriesDirectInput.setHintTextColor(getColor(requireContext(),R.color.design_default_color_error))
                 }
-                value.toString().toFloatOrNull() == null -> {
+                value.toString().toFloatOrNull() == null -> { //filter for not valid float values
                     newValueIsValid=false
                     binding.getRandomMealButton.isEnabled=false
                     binding.caloriesError.text = getString(R.string.caloriesFormatError)
@@ -165,15 +174,14 @@ class RandomFragment : Fragment() {
                 else -> {
                     val actualFloatValue=value.toString().toFloat().roundToInt().toFloat()
                     when {
-                        actualFloatValue>highestPossibleCalorieScore -> {
+                        actualFloatValue>highestPossibleCalorieScore -> { //filter for too high values
                             newValueIsValid=false
                             binding.getRandomMealButton.isEnabled=false
                             binding.caloriesError.text = getString(R.string.caloriesToHighError)
                             binding.maxCaloriesDirectInput.setTextColor(getColor(requireContext(),R.color.design_default_color_error))
                             binding.caloriesError.visibility=View.VISIBLE
                         }
-                        actualFloatValue<lowestPossibleCalorieScore
-                        -> {
+                        actualFloatValue<lowestPossibleCalorieScore -> { //filter for too low values
                             newValueIsValid=false
                             binding.getRandomMealButton.isEnabled=false
                             binding.caloriesError.text = getString(R.string.caloriesToLowError)
@@ -191,30 +199,36 @@ class RandomFragment : Fragment() {
         }
 
 
+        //an after text change listener that copies the value to the rangeslider
         binding.minCaloriesDirectInput.doAfterTextChanged { value ->
 
             val actualValue= value.toString().toFloatOrNull()?.roundToInt()?.toFloat()
-            if(binding.minCaloriesDirectInput.hasFocus() && newValueIsValid && actualValue!=null && actualValue >= lowestPossibleCalorieScore)
+            if(binding.minCaloriesDirectInput.hasFocus() && newValueIsValid)
             {
                binding.caloriesSlider.setValues(actualValue,binding.caloriesSlider.values[1])
                 checkParams()
             }
         }
 
+        //an after text change listener that copies the value to the rangeslider
         binding.maxCaloriesDirectInput.doAfterTextChanged { value ->
             val actualValue= value.toString().toFloatOrNull()?.roundToInt()?.toFloat()
-            if(binding.maxCaloriesDirectInput.hasFocus() && newValueIsValid  && actualValue!=null && actualValue <= highestPossibleCalorieScore)
+            if(binding.maxCaloriesDirectInput.hasFocus() && newValueIsValid)
             {
                 binding.caloriesSlider.setValues(binding.caloriesSlider.values[0],actualValue)
                 checkParams()
             }
         }
 
+        //trigger for the category selection popup
         binding.categorySelectionTrigger.setOnClickListener {chooseCategoryDialog()}
+        //button to start the search
         binding.getRandomMealButton.setOnClickListener {startSearch()}
     }
 
-
+    /**
+     * creates dialog for selection of categories, if none is ticked, all categories will be considered
+     */
     private fun chooseCategoryDialog()
     {
         val categories = allCategories.toTypedArray()
@@ -235,12 +249,18 @@ class RandomFragment : Fragment() {
             .show()
     }
 
+    /**
+     * sets categories for seach and as preticked if category selection dialog is reopened
+     */
     private fun setWantedAndCheckedCategories(checkedCategories:List<String>, tickedCategories:BooleanArray)
     {
         this.initialTickedCategories = tickedCategories
         this.wantedCategories = checkedCategories
     }
 
+    /**
+     * checks for calorie params being valid values and enables or disables the search button accordingly
+     */
     private fun checkParams():Boolean
     {
         val minimalCalories=binding.caloriesSlider.values[0]
@@ -251,41 +271,36 @@ class RandomFragment : Fragment() {
         return paramsAreValid
     }
 
+    /**
+     * filters all meals for a correct outcome according to user params if given
+     */
     private fun startSearch()
     {
+        viewModel.allMeals.observe(this.viewLifecycleOwner) { allMeals ->
+            val filteredByIsVeggie: List<Meal> = if(binding.veggieCheckbox.isChecked) allMeals.filter { meal -> meal.isVeggie} else allMeals
+            val filteredByIsVegan: List<Meal> = if(binding.veganCheckbox.isChecked) filteredByIsVeggie.filter { meal -> meal.isVegan} else filteredByIsVeggie
+            val filteredByCalories: List<Meal> = if(wantedCategories.isNotEmpty()) filteredByIsVegan.filter { meal -> meal.calories>=binding.caloriesSlider.values[0] && meal.calories<=binding.caloriesSlider.values[1]} else filteredByIsVegan
 
-        if(checkParams())
-        {
-            viewModel.allMeals.observe(this.viewLifecycleOwner) { allMeals ->
-                val filteredByIsVeggie: List<Meal> = if(binding.veggieCheckbox.isChecked) allMeals.filter { meal -> meal.isVeggie} else allMeals
-                val filteredByIsVegan: List<Meal> = if(binding.veganCheckbox.isChecked) filteredByIsVeggie.filter { meal -> meal.isVegan} else filteredByIsVeggie
-                val filteredByCalories: List<Meal> = if(wantedCategories.isNotEmpty()) filteredByIsVegan.filter { meal -> meal.calories>=binding.caloriesSlider.values[0] && meal.calories<=binding.caloriesSlider.values[1]} else filteredByIsVegan
-
-                if(filteredByCalories.isNullOrEmpty())
-                {
-                    binding.resultMealCard.root.visibility= View.INVISIBLE
-                    Toast.makeText(requireContext(), getString(R.string.noMealWithParamsAvailableToast), Toast.LENGTH_SHORT).show()
-                }
-                else
-                {
-                    val meal:Meal=filteredByCalories[Random.nextInt(filteredByCalories.size)]
-                    bind(meal)
-                    binding.resultMealCard.root.visibility = View.VISIBLE
-                    wantedCategories= mutableListOf<String>()
-                    initialTickedCategories=BooleanArray(0)
-
-                }
+            if(filteredByCalories.isNullOrEmpty())
+            {
+                binding.resultMealCard.root.visibility= View.INVISIBLE
+                Toast.makeText(requireContext(), getString(R.string.noMealWithParamsAvailableToast), Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                val meal:Meal=filteredByCalories[Random.nextInt(filteredByCalories.size)]
+                bind(meal)
+                binding.resultMealCard.root.visibility = View.VISIBLE
+                wantedCategories= mutableListOf<String>()
+                initialTickedCategories=BooleanArray(0)
 
             }
-        }
-        else
-        {
-            Toast.makeText(requireContext(), "Parameter fehlerhaft", Toast.LENGTH_SHORT).show()
+
         }
     }
 
     /**
-     * Binds views with the passed in item data.
+     * Binds views with the passed in [Meal] data.
      */
     private fun bind(meal: Meal) {
         this.meal=meal
