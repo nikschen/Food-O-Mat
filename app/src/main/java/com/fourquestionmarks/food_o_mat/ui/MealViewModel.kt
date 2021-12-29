@@ -72,19 +72,6 @@ class MealViewModel(private val mealDao: MealDao) : ViewModel() {
         return mealDao.getHighestCalorieScore()
     }
 
-    /**
-     * Returns true if the EditTexts are not empty
-     */
-    fun isValid(mealName: String, mealPrice: String, mealCount: String): Boolean {
-        //TODO: sinnvolle Prüfung
-//        if (mealName.isBlank() || mealPrice.isBlank() || mealCount.isBlank()) {
-//            return false
-//        }
-        return true
-    }
-
-
-
 }
 
 /**
