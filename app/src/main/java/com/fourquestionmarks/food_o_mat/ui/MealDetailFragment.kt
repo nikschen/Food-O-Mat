@@ -17,7 +17,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlin.math.roundToInt
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a detailed view of [Meal] with full data
  */
 class MealDetailFragment : Fragment() {
     private val navigationArgs: MealDetailFragmentArgs by navArgs()
@@ -38,7 +38,7 @@ class MealDetailFragment : Fragment() {
     }
 
     /**
-     * Binds views with the passed in item data.
+     * Binds views with the passed in [Meal] data.
      */
     private fun bind(meal: Meal) {
         binding.apply {
@@ -55,7 +55,7 @@ class MealDetailFragment : Fragment() {
     }
 
     /**
-     * Navigate to the Edit item screen.
+     * Navigate to the [AddOrUpdateMealFragment]
      */
     private fun editMeal() {
         val action = MealDetailFragmentDirections.actionMealDetailFragmentToAddOrUpdateMealFragment(meal.name,meal.ID!!)
@@ -63,7 +63,7 @@ class MealDetailFragment : Fragment() {
     }
 
     /**
-     * Displays an alert dialog to get the user's confirmation before deleting the item.
+     * Displays an alert dialog to get the user's confirmation before deleting the meal.
      */
     private fun showConfirmationDialog() {
         MaterialAlertDialogBuilder(requireContext())
@@ -78,7 +78,7 @@ class MealDetailFragment : Fragment() {
     }
 
     /**
-     * Deletes the current item and navigates to the list fragment.
+     * Deletes the current Meal and navigates to the last fragment.
      */
     private fun deleteMeal() {
         viewModel.deleteMeal(meal)

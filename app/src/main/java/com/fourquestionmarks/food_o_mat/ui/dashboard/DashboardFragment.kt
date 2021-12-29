@@ -18,8 +18,13 @@ import com.fourquestionmarks.food_o_mat.databinding.FragmentDashboardBinding
 import com.fourquestionmarks.food_o_mat.model.Meal
 import com.fourquestionmarks.food_o_mat.ui.MealViewModel
 import com.fourquestionmarks.food_o_mat.ui.MealViewModelFactory
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
+/**
+ * [Fragment] that displays a random [Meal] of the day
+ *
+ * */
 class DashboardFragment : Fragment() {
 
     private lateinit var viewModel: MealViewModel
@@ -36,15 +41,16 @@ class DashboardFragment : Fragment() {
     ): View {
 
         viewModel= MealViewModelFactory((activity?.application as FoodOMatApplication).database.mealDao()).create(MealViewModel::class.java)
+        //gets all Meals to get all meals and select a random meal for displaying
         viewModel.allMeals.observe(this.viewLifecycleOwner) { listOfMeals ->
             allMeals=listOfMeals
-            if(allMeals.size>0)
+            if(allMeals.isNotEmpty())
             {
                 val randomID:Int=Random.nextInt(0,allMeals.size)
                 meal=allMeals[randomID]
                 bind(meal)
                 binding.mealCardInclude.mealCard.setOnClickListener {
-                    val action = DashboardFragmentDirections.actionNavigationDashboardToMealDetailFragment(meal!!.name, meal!!.ID!!)
+                    val action = DashboardFragmentDirections.actionNavigationDashboardToMealDetailFragment(meal.name, meal.ID!!)
                     findNavController().navigate(action)
                 }
             }
@@ -54,13 +60,13 @@ class DashboardFragment : Fragment() {
     }
 
     /**
-     * Binds views with the passed in item data.
+     * Binds views with the passed in [Meal] data.
      */
     private fun bind(meal: Meal) {
         binding.mealCardInclude.apply {
             name.text=meal.name
             category.text=meal.category
-            calories.text=meal.calories.toString()
+            calories.text=meal.calories.roundToInt().toString()
             carbohydrates.text=meal.carbohydrates.toString()
             proteins.text=meal.proteins.toString()
             fats.text=meal.fats.toString()

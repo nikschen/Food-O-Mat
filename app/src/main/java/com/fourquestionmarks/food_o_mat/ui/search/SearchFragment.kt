@@ -23,6 +23,10 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
+/**
+ * [Fragment] that displays one random [Meal] according to user defined params if provided or any meal of the database if no params given
+ * implements an input field for a specific name or part of a name, a Rangeslider for a range of calories, as well as veggie and vegan checkboxes and selectable categories
+ * */
 class SearchFragment : Fragment() {
 
     private lateinit var viewModel: MealViewModel
@@ -33,7 +37,6 @@ class SearchFragment : Fragment() {
     private lateinit var allCategories: List<String>
     private var wantedCategories: List<String> = mutableListOf<String>()
     private var initialTickedCategories:BooleanArray=BooleanArray(0)
-    private lateinit var meal: Meal
     private var newValueIsValid=false
 
     private var _binding: FragmentSearchBinding? = null

@@ -51,9 +51,7 @@ class MealListAdapter(private val onMealClicked: (Meal) -> Unit) :
 
         }
 
-
     }
-
 
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<Meal>() {

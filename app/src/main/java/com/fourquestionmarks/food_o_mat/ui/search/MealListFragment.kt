@@ -18,7 +18,9 @@ import com.fourquestionmarks.food_o_mat.ui.MealDetailFragmentArgs
 import com.fourquestionmarks.food_o_mat.ui.MealViewModel
 import com.fourquestionmarks.food_o_mat.ui.MealViewModelFactory
 
-
+/**
+ * [Fragment] that displays a list of [Meal]s that are results of a user search
+ * */
 class MealListFragment : Fragment() {
     private val navigationArgs: MealListFragmentArgs by navArgs()
     private lateinit var viewModel: MealViewModel
@@ -31,15 +33,12 @@ class MealListFragment : Fragment() {
         viewModel= MealViewModelFactory((activity?.application as FoodOMatApplication).database.mealDao()).create(MealViewModel::class.java)
         _binding = FragmentMealListBinding.inflate(inflater, container, false)
 
-
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
 
         //sets adapter to the ModuleListAdapter, specially created to list all Modules with only some data
         val adapter = MealListAdapter {

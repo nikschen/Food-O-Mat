@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fourquestionmarks.food_o_mat.FoodOMatApplication
@@ -25,7 +26,10 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-
+/**
+ * [Fragment] to create a new [Meal] entry for the database according to user input
+ * requires a name, a category, calories and nutritions of the meal
+ * */
 class AddOrUpdateMealFragment : Fragment() {
     private val viewModel: MealViewModel by activityViewModels {MealViewModelFactory((activity?.application as FoodOMatApplication).database.mealDao())}
     private val navigationArgs: AddOrUpdateMealFragmentArgs by navArgs()
@@ -41,6 +45,8 @@ class AddOrUpdateMealFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAddOrUpdateMealBinding.inflate(inflater, container, false)
+
+        //gets all categories for category dropdown
         lifecycleScope.launch {
             val operation = async(Dispatchers.IO) {
                 viewModel.getAllCategories().let {
@@ -59,7 +65,7 @@ class AddOrUpdateMealFragment : Fragment() {
 
 
     /**
-     * Returns true if the EditTexts are not empty
+     * Validates all input params to check for empty/null and validity
      */
     private fun isValid(param: View?, checkAll: Boolean=false): Boolean {
         var isValid=true
@@ -174,7 +180,7 @@ class AddOrUpdateMealFragment : Fragment() {
 
 
     /**
-     * Inserts the new Meal into database and navigates up to list fragment.
+     * Inserts the new Meal into database and navigates to detail fragment of the inserted meal
      */
     private fun addNewMeal() {
         if (isValid(null,true)) {
@@ -225,9 +231,7 @@ class AddOrUpdateMealFragment : Fragment() {
 
     /**
      * Called when the view is created.
-     * The MealId Navigation argument determines the edit Meal  or add new Meal.
-     * If the MealId is positive, this method retrieves the information from the database and
-     * allows the user to update it.
+     *
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -255,7 +259,7 @@ class AddOrUpdateMealFragment : Fragment() {
         }
 
 
-
+        //check if mealID in navArgs is a real ID to determine if add or update of a meal should be done
 
         val id = navigationArgs.mealID
         if (id > 0) {
@@ -276,8 +280,7 @@ class AddOrUpdateMealFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         // Hide keyboard.
-        val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as
-                InputMethodManager
+        val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
         _binding = null
     }
