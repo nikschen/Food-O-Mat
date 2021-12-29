@@ -93,8 +93,7 @@ class RandomFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //initial check to enable the search button while no input was made
-        checkParams()
+        binding.getRandomMealButton.isEnabled=true
 
         //on change listener for only user inferred changes to the rangeslider values, copies the changes to the corresponding direct inputs
         binding.caloriesSlider.addOnChangeListener { slider, values, fromUser ->
