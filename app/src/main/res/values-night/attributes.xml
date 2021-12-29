@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="dashboardMaterialCardColor" format="reference|color"/>
+    <attr name="contrastTextColor" format="reference|color"/>
+    <attr name="colorSecondaryWeakened" format="reference|color"/>
+</resources>
