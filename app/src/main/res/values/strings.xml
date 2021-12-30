@@ -3,7 +3,7 @@
         <string name="app_name">Food-O-Mat</string>
         <!-- titles -->
             <string name="title_random">Zufall</string>
-            <string name="title_dashboard">Übersicht</string>
+            <string name="title_dashboard">Gericht des Tages</string>
             <string name="title_search">Suche</string>
             <string name="title_new_meal">Neues Gericht</string>
             <string name="title_results">Ergebnisse</string>
@@ -14,6 +14,7 @@
     <string name="cancel">Abbrechen</string>
     <string name="ok">Okay</string>
 
+    <string name="caloriesWithUnit">%1$d kcal</string>
     <string name="categories">Kategorien</string>
     <string name="noMealWithParamsAvailableToast">Kein Gericht zu diesen Kriterien verfügbar</string>
     <string name="caloriesToLowError">Zu niedriger Wert für das Kalorienminimum</string>
@@ -61,8 +62,7 @@
     <string name="editOrDeleteMealButtonDescription">Button zum Ändern oder Löschen des Gerichts</string>
     <string name="isVeganLabelDescription">Ist das Gericht Vegan?</string>
     <string name="isVeggieLabelDescription">Ist das Gericht vegetarisch?</string>
-
-
+    <string name="title_dashboard_bottom_bar">Übersicht</string>
 
 
 </resources>
