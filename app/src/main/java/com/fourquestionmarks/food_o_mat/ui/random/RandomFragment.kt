@@ -284,7 +284,8 @@ class RandomFragment : Fragment() {
         viewModel.allMeals.observe(this.viewLifecycleOwner) { allMeals ->
             val filteredByIsVeggie: List<Meal> = if(binding.veggieCheckbox.isChecked) allMeals.filter { meal -> meal.isVeggie} else allMeals
             val filteredByIsVegan: List<Meal> = if(binding.veganCheckbox.isChecked) filteredByIsVeggie.filter { meal -> meal.isVegan} else filteredByIsVeggie
-            val filteredByCalories: List<Meal> = if(wantedCategories.isNotEmpty()) filteredByIsVegan.filter { meal -> meal.calories.roundToInt()>=binding.caloriesSlider.values[0].roundToInt() && meal.calories.roundToInt()<=binding.caloriesSlider.values[1].roundToInt()} else filteredByIsVegan
+            val filteredByCategories: List<Meal> = if(wantedCategories.isNotEmpty()) filteredByIsVegan.filter { meal -> wantedCategories.contains(meal.category)} else filteredByIsVegan
+            val filteredByCalories: List<Meal> = filteredByCategories.filter { meal -> meal.calories.roundToInt()>=binding.caloriesSlider.values[0].roundToInt() && meal.calories.roundToInt()<=binding.caloriesSlider.values[1].roundToInt()}
 
             if(filteredByCalories.isNullOrEmpty())
             {
@@ -296,8 +297,6 @@ class RandomFragment : Fragment() {
                 val meal:Meal=filteredByCalories[Random.nextInt(filteredByCalories.size)]
                 bind(meal)
                 binding.resultMealCard.root.visibility = View.VISIBLE
-                wantedCategories= mutableListOf<String>()
-                initialTickedCategories=BooleanArray(0)
 
             }
 

@@ -101,5 +101,10 @@
             app:destination="@id/navigation_dashboard"
             app:popUpTo="@id/navigation_dashboard" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.fourquestionmarks.food_o_mat.ui.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 
 </navigation>

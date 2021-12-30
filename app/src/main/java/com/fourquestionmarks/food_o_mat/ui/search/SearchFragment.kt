@@ -282,7 +282,7 @@ class SearchFragment : Fragment() {
     private fun startSearch()
     {
         viewModel.allMeals.observe(this.viewLifecycleOwner) { allMeals ->
-            val filteredByName: List<Meal> = if(!binding.mealNameInput.text.isNullOrEmpty()) allMeals.filter{ meal -> meal.name.contains(binding.mealNameInput.text.toString())} else allMeals
+            val filteredByName: List<Meal> = if(!binding.mealNameInput.text.isNullOrEmpty()) allMeals.filter{ meal -> meal.name.contains(binding.mealNameInput.text.toString(),true)} else allMeals
             val filteredByIsVeggie: List<Meal> = if(binding.veggieCheckbox.isChecked) filteredByName.filter { meal -> meal.isVeggie} else filteredByName
             val filteredByIsVegan: List<Meal> = if(binding.veganCheckbox.isChecked) filteredByIsVeggie.filter { meal -> meal.isVegan} else filteredByIsVeggie
             val filteredByCategories: List<Meal> = if(wantedCategories.isNotEmpty()) filteredByIsVegan.filter { meal -> wantedCategories.contains(meal.category)} else filteredByIsVegan
