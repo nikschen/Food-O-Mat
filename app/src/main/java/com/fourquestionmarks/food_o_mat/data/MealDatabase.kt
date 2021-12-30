@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
 
-@Database(entities = [Meal::class], version = 3, exportSchema = false)
+@Database(entities = [Meal::class], version = 4, exportSchema = false)
 abstract class FoodOMatDatabase : RoomDatabase() {
 
     abstract fun mealDao(): MealDao
@@ -32,7 +32,6 @@ abstract class FoodOMatDatabase : RoomDatabase() {
                     // Wipes and rebuilds instead of migrating if no Migration object.
                     // Migration is not part of this codelab.
                     .fallbackToDestructiveMigration()
-                    .addCallback(FOMDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
                 // return instance
@@ -41,25 +40,4 @@ abstract class FoodOMatDatabase : RoomDatabase() {
         }
     }
 
-    //callback for prefilling the database with test data
-    private class FOMDatabaseCallback(private val scope: CoroutineScope): RoomDatabase.Callback() {
-        override fun onCreate(db: SupportSQLiteDatabase) {
-            super.onCreate(db)
-            INSTANCE?.let { database ->
-                scope.launch {
-                    populateDatabaseWithMeals(database.mealDao())
-                }
-            }
-        }
-
-
-        // prefilling database functions for each entity
-        suspend fun populateDatabaseWithMeals(mealDao: MealDao) {
-
-            var meal = Meal(0, "Testname", "Auflauf", 123.4f, 43.21f, 12.3f, 10.5f, true, false)
-            mealDao.insert(meal)
-            meal = Meal(1, "Testname2", "Auflauf", 1234.5f, 43.21f, 12.3f, 10.5f, true, true)
-            mealDao.insert(meal)
-        }
-    }
 }
