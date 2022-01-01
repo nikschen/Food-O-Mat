@@ -8,7 +8,7 @@ import kotlinx.coroutines.SupervisorJob
 
 class FoodOMatApplication : Application()  {
 
-    private val applicationScope= CoroutineScope(SupervisorJob())
+    val applicationScope= CoroutineScope(SupervisorJob())
     val database: FoodOMatDatabase by lazy { FoodOMatDatabase.getDatabase(this, applicationScope) }
     val settings: KeyValueStore= KeyValueStore(this)
 

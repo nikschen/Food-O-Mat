@@ -27,4 +27,20 @@ data class Meal(
     var isVegan: Boolean,
     )
 {
+
+    override fun toString(): String {
+        val veggie= if (isVeggie) "ja" else "nein"
+        val vegan= if (isVegan) "ja" else "nein"
+        var returnString =""
+        returnString += "$name;"
+        returnString += "$ID;"
+        returnString += "$category;"
+        returnString += "${calories.toString().replace(".",",")};"
+        returnString += "${carbohydrates.toString().replace(".",",")};"
+        returnString += "${proteins.toString().replace(".",",")};"
+        returnString += "${fats.toString().replace(".",",")};"
+        returnString += "${veggie};"
+        returnString += "${vegan};"
+        return returnString
+    }
 }

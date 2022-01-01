@@ -1,6 +1,7 @@
 package com.fourquestionmarks.food_o_mat.ui.search
 
 import android.os.Bundle
+import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.fourquestionmarks.food_o_mat.FoodOMatApplication
 import com.fourquestionmarks.food_o_mat.R
@@ -294,9 +296,11 @@ class SearchFragment : Fragment() {
             }
             else
             {
-                val allValidIDs:MutableList<Int> = mutableListOf(0)
+                val allValidIDs:MutableList<Int> = emptyList<Int>().toMutableList()
                 filteredByCalories.forEach { allValidIDs.add(it.ID!!)}
-                val action= SearchFragmentDirections.actionNavigationSearchToMealListFragment(allValidIDs.toIntArray())
+                val action: NavDirections
+                action = if(allValidIDs.size==1) SearchFragmentDirections.actionNavigationSearchToMealListFragment(allValidIDs.toIntArray(),getString(R.string.title_singleResult))
+                else SearchFragmentDirections.actionNavigationSearchToMealListFragment(allValidIDs.toIntArray(),getString(R.string.title_results,allValidIDs.size))
                 findNavController().navigate(action)
             }
 

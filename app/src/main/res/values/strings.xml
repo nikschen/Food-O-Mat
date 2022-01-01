@@ -6,7 +6,8 @@
     <string name="title_dashboard">Gericht des Tages</string>
     <string name="title_search">Suche</string>
     <string name="title_new_meal">Neues Gericht</string>
-    <string name="title_results">Ergebnisse</string>
+    <string name="title_singleResult">1 Ergebnis</string>
+    <string name="title_results">%1$d Ergebnisse</string>
 
     <!-- common -->
     <string name="no">Nein</string>
@@ -14,7 +15,11 @@
     <string name="cancel">Abbrechen</string>
     <string name="ok">Okay</string>
 
+    <!-- data with units -->
     <string name="caloriesWithUnit">%1$d kcal</string>
+    <string name="nutritionsWithUnit">%1$s g</string>
+
+
     <string name="categories">Kategorien</string>
     <string name="noMealWithParamsAvailableToast">Kein Gericht zu diesen Kriterien verfügbar</string>
     <string name="caloriesToLowError">Zu niedriger Wert für das Kalorienminimum</string>

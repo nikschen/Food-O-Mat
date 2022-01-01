@@ -18,6 +18,8 @@ import com.fourquestionmarks.food_o_mat.databinding.FragmentDashboardBinding
 import com.fourquestionmarks.food_o_mat.model.Meal
 import com.fourquestionmarks.food_o_mat.ui.MealViewModel
 import com.fourquestionmarks.food_o_mat.ui.MealViewModelFactory
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import kotlin.math.roundToInt
 import kotlin.random.Random
 
@@ -64,12 +66,14 @@ class DashboardFragment : Fragment() {
      */
     private fun bind(meal: Meal) {
         binding.mealCardInclude.apply {
+            val df = DecimalFormat("#.##")
+            df.roundingMode= RoundingMode.HALF_UP
             name.text=meal.name
             category.text=meal.category
-            calories.text=meal.calories.roundToInt().toString()
-            carbohydrates.text=meal.carbohydrates.toString()
-            proteins.text=meal.proteins.toString()
-            fats.text=meal.fats.toString()
+            calories.text=getString(R.string.caloriesWithUnit, meal.calories.roundToInt())
+            carbohydrates.text=getString(R.string.nutritionsWithUnit,df.format(meal.carbohydrates))
+            proteins.text=getString(R.string.nutritionsWithUnit,df.format(meal.proteins))
+            fats.text=getString(R.string.nutritionsWithUnit,df.format(meal.fats))
             isVeggieCheckbox.isChecked=meal.isVeggie
             isVeganCheckbox.isChecked=meal.isVegan
         }

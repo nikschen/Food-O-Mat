@@ -1,12 +1,18 @@
 package com.fourquestionmarks.food_o_mat
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.net.toFile
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,12 +24,20 @@ import com.fourquestionmarks.food_o_mat.model.Meal
 import com.fourquestionmarks.food_o_mat.ui.MealViewModel
 import com.fourquestionmarks.food_o_mat.ui.MealViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.io.BufferedReader
-import java.io.File
-import java.io.InputStream
-import java.io.InputStreamReader
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.forEach
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.*
 import java.nio.charset.Charset
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
+const val  PICK_CSV_FOR_IMPORT = 1
+const val  CREATE_CSV_FOR_EXPORT = 2
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,15 +45,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var viewModel: MealViewModel
     private lateinit var settings: KeyValueStore
-    private var pickfileForImportResultCode = 1
-    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        // Handle the returned Uri
-        if (uri != null) {
-            val importFile = File(uri.path!!)
-            val allLines = importFile.readLines()
-            importMeals(allLines)
-        }
-    }
+//    private val contentResolver= applicationContext.contentResolver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +62,8 @@ class MainActivity : AppCompatActivity() {
             val inputStream: InputStream = resources.openRawResource(R.raw.mahlzeiten)
             val reader = BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
             val allLines = reader.readLines()
-            importMeals(allLines)
+            (application as FoodOMatApplication).applicationScope.launch {
+                importMeals(allLines)}
 
             settings.writeBoolValue("isFirstRun", false)
         }
@@ -77,39 +84,125 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun importMeals(allLines: List<String>) {
+    private suspend fun importMeals(allLines: List<String>) {
+
         allLines.forEach {
 
-            //get a string array of all items in this list
-            val mealData = it.split(";").toMutableList()
-            //turn 'möglich' and 'ja' into true and 'nein' into false
-            if (mealData[6] == "ja" || mealData[6] == "möglich") mealData[6] = "true" else mealData[6] = "false"
-            if (mealData[7] == "ja" || mealData[7] == "möglich") mealData[7] = "true" else mealData[7] = "false"
-            // generate new meal entry
-            val meal = Meal(
-                null,                                                        //ID
-                mealData[0],                                                 // meal name
-                mealData[1],                                                 // category
-                mealData[2].replace(",", ".").toFloat(),     //calories
-                mealData[3].replace(",", ".").toFloat(),     //carbohydrates
-                mealData[4].replace(",", ".").toFloat(),     //proteins
-                mealData[5].replace(",", ".").toFloat(),     //fats
-                mealData[6].toBoolean(), //isVeggie
-                mealData[7].toBoolean()
-            ) //isVegan
+                //get a string array of all items in this list
+                val mealData = it.split(";").toMutableList()
+                //turn 'möglich' and 'ja' into true and 'nein' into false
+                if (mealData[7] == "ja" || mealData[7] == "möglich") mealData[7] = "true" else mealData[7] = "false"
+                if (mealData[8] == "ja" || mealData[8] == "möglich") mealData[8] = "true" else mealData[8] = "false"
+                // generate new meal entry
+                val meal = Meal(
+                    name=mealData[0],
+                    ID=mealData[1].toInt(),
+                    category = mealData[2],
+                    calories = mealData[3].replace(",", ".").toFloat(),
+                    carbohydrates = mealData[4].replace(",", ".").toFloat(),
+                    proteins = mealData[5].replace(",", ".").toFloat(),
+                    fats = mealData[6].replace(",", ".").toFloat(),
+                    isVeggie = mealData[7].toBoolean(),
+                    isVegan = mealData[8].toBoolean()
+                )
 
-            //insert new meal entry
+                //insert new meal entry
             viewModel.insertMeal(meal)
+        }
+        withContext(Dispatchers.Main){
+            Toast.makeText(applicationContext, "Mahlzeiten erfolgreich importiert", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun showImportMealsDialog() {
-        getContent.launch("*/*")
+
+
+    private fun openFileForMealImport(){
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply{
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type= "*/*"
+            putExtra("CONTENT_TYPE","text/csv")
+        }
+
+
+        startActivityForResult(intent, PICK_CSV_FOR_IMPORT)
+    }
+
+    private fun createFileForMealExport(){
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply{
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type= "*/*"
+            putExtra(Intent.EXTRA_TITLE,"fom_export_${LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)}.csv")}
+
+
+        startActivityForResult(intent, CREATE_CSV_FOR_EXPORT)
+    }
+
+    private fun shareFileAfterExport(contentUri:Uri){
+        val intent= Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+//            putExtra("CONTENT_TYPE","text/csv")
+            data = contentUri
+            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        }
+        val shareIntent = Intent.createChooser(intent, null)
+        startActivity(shareIntent)
+    }
+
+
+
+    @SuppressLint("MissingSuperCall")
+    @Throws(IOException::class)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        if(requestCode == PICK_CSV_FOR_IMPORT && resultCode == Activity.RESULT_OK) {
+            resultData?.data?.also {
+                contentResolver.openInputStream(it)?.use {inputStream ->
+                    BufferedReader(InputStreamReader(inputStream)).use{ reader ->
+                        val allLines=reader.readLines()
+                        if(checkFile(allLines))
+                        {
+                            (application as FoodOMatApplication).applicationScope.launch {
+                                importMeals(allLines)}
+                        }
+                        else Toast.makeText(applicationContext, "Ungültige Formatierung", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+        else if(requestCode == CREATE_CSV_FOR_EXPORT && resultCode == Activity.RESULT_OK){
+            resultData?.data?.also { uri ->
+                (application as FoodOMatApplication).applicationScope.launch {
+                    exportMeals(uri)}
+            }
+        }
+    }
+
+    private suspend fun exportMeals(uri: Uri){
+            try {
+                contentResolver.openFileDescriptor(uri, "w")?.use {
+                    FileOutputStream(it.fileDescriptor).use { fileOutputStream ->
+                        val allMealsToExport=viewModel.getMealsAsList()
+                        allMealsToExport.forEach { meal-> fileOutputStream.write("$meal\n".toByteArray())}
+                        fileOutputStream.close()
+                        withContext(Dispatchers.Main){
+                            Toast.makeText(applicationContext, "${allMealsToExport.size} Mahlzeiten erfolgreich exportiert", Toast.LENGTH_SHORT).show()
+                        }
+//                        shareFileAfterExport(uri)
+                    }
+                }
+
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
 
     }
 
-    private fun showExportMealsDialog() {
-
+    private fun checkFile(allLines: List<String>): Boolean {
+        allLines.forEach { line ->
+            if(line.isNotEmpty() && line.count{ char -> char==';'} != 8) return false
+        }
+        return true
     }
 
 
@@ -121,11 +214,11 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.importMeals -> {
-                showImportMealsDialog()
+                openFileForMealImport()
                 return true
             }
             R.id.exportMeals -> {
-                showExportMealsDialog()
+                createFileForMealExport()
                 return true
             }
 
@@ -137,8 +230,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
-        //TODO: Auskommentiert für Release 1.0
-        // menuInflater.inflate(R.menu.top_bar_menu, menu)
+         menuInflater.inflate(R.menu.top_bar_menu, menu)
 
         return true
     }

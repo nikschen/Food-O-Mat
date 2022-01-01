@@ -38,6 +38,13 @@ class MealViewModel(private val mealDao: MealDao) : ViewModel() {
     }
 
     /**
+     * Retrieve all [Meal]s from the database as a List.
+     */
+    fun getMealsAsList(): List<Meal> {
+        return mealDao.getMealsAsList()
+    }
+
+    /**
      * Retrieve a specific [Meal] from the database.
      */
     fun getMealById(id: Int): LiveData<Meal> {
@@ -56,6 +63,13 @@ class MealViewModel(private val mealDao: MealDao) : ViewModel() {
      */
     fun getAllCategories():List<String>{
         return mealDao.getAllCategories()
+    }
+
+    /**
+     * Get amount of meals stored in database
+     */
+    fun getMealCount():Int{
+        return mealDao.getMealCount()
     }
 
     /**

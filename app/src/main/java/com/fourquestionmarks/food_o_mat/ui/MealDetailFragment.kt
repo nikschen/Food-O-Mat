@@ -14,6 +14,8 @@ import com.fourquestionmarks.food_o_mat.R
 import com.fourquestionmarks.food_o_mat.databinding.FragmentMealDetailBinding
 import com.fourquestionmarks.food_o_mat.model.Meal
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
 /**
@@ -42,11 +44,13 @@ class MealDetailFragment : Fragment() {
      */
     private fun bind(meal: Meal) {
         binding.apply {
+            val df = DecimalFormat("#.##")
+            df.roundingMode=RoundingMode.HALF_UP
             category.setText(meal.category, TextView.BufferType.SPANNABLE)
-            calories.setText(meal.calories.roundToInt().toString(), TextView.BufferType.SPANNABLE)
-            carbohydrates.setText(meal.carbohydrates.toString(), TextView.BufferType.SPANNABLE)
-            proteins.setText(meal.proteins.toString(), TextView.BufferType.SPANNABLE)
-            fats.setText(meal.fats.toString(), TextView.BufferType.SPANNABLE)
+            calories.setText(getString(R.string.caloriesWithUnit, meal.calories.roundToInt()), TextView.BufferType.SPANNABLE)
+            carbohydrates.setText(getString(R.string.nutritionsWithUnit,df.format(meal.carbohydrates)), TextView.BufferType.SPANNABLE)
+            proteins.setText(getString(R.string.nutritionsWithUnit,df.format(meal.proteins)), TextView.BufferType.SPANNABLE)
+            fats.setText(getString(R.string.nutritionsWithUnit,df.format(meal.fats)), TextView.BufferType.SPANNABLE)
             isVeggieCheckbox.isChecked=meal.isVeggie
             isVeganCheckbox.isChecked=meal.isVegan
             deleteMeal.setOnClickListener { showConfirmationDialog() }

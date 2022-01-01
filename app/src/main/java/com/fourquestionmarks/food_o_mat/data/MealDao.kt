@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MealDao
 {
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(meal: Meal)
 
     @Delete
@@ -22,6 +22,9 @@ interface MealDao
     @Query ("SELECT * FROM meals")
     fun getMeals(): Flow<List<Meal>>
 
+    @Query ("SELECT * FROM meals")
+    fun getMealsAsList(): List<Meal>
+
     @Query("SELECT * FROM meals WHERE id=(SELECT MAX(id) from meals) order by id DESC ")
     fun getLastInsertedMeal():Flow<Meal>
 
@@ -33,4 +36,7 @@ interface MealDao
 
     @Query("SELECT DISTINCT category from meals")
     fun getAllCategories():List<String>
+
+    @Query("SELECT COUNT(ID) from meals")
+    fun getMealCount():Int
 }
