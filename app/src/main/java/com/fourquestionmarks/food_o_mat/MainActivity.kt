@@ -8,11 +8,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.net.toFile
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -25,16 +22,12 @@ import com.fourquestionmarks.food_o_mat.ui.MealViewModel
 import com.fourquestionmarks.food_o_mat.ui.MealViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.forEach
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.*
 import java.nio.charset.Charset
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.math.roundToInt
 
 const val  PICK_CSV_FOR_IMPORT = 1
 const val  CREATE_CSV_FOR_EXPORT = 2
@@ -45,7 +38,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var viewModel: MealViewModel
     private lateinit var settings: KeyValueStore
-//    private val contentResolver= applicationContext.contentResolver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        if (settings.getBoolValue("isFirstRun")) {
+        if (settings.getBoolValue("isFirstRun") && false) {
             val inputStream: InputStream = resources.openRawResource(R.raw.mahlzeiten)
             val reader = BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
             val allLines = reader.readLines()
@@ -90,9 +82,6 @@ class MainActivity : AppCompatActivity() {
 
                 //get a string array of all items in this list
                 val mealData = it.split(";").toMutableList()
-                //turn 'möglich' and 'ja' into true and 'nein' into false
-                if (mealData[7] == "ja" || mealData[7] == "möglich") mealData[7] = "true" else mealData[7] = "false"
-                if (mealData[8] == "ja" || mealData[8] == "möglich") mealData[8] = "true" else mealData[8] = "false"
                 // generate new meal entry
                 val meal = Meal(
                     name=mealData[0],

@@ -1,7 +1,6 @@
 package com.fourquestionmarks.food_o_mat.adapter
 
 import android.content.Context
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fourquestionmarks.food_o_mat.R
-import com.fourquestionmarks.food_o_mat.databinding.MealCardFullBinding
 import com.fourquestionmarks.food_o_mat.databinding.MealCardShortBinding
 import com.fourquestionmarks.food_o_mat.model.Meal
 import kotlin.math.roundToInt
@@ -45,10 +43,20 @@ class MealListAdapter(private val onMealClicked: (Meal) -> Unit) :
                     veggieLabelEmpty.visibility= View.INVISIBLE
                     veggieLabel.visibility= View.VISIBLE
                 }
+                else
+                {
+                    veggieLabelEmpty.visibility= View.VISIBLE
+                    veggieLabel.visibility= View.INVISIBLE
+                }
                 if(meal.isVegan)
                 {
                     veganLabelEmpty.visibility= View.INVISIBLE
                     veganLabel.visibility= View.VISIBLE
+                }
+                else
+                {
+                    veganLabelEmpty.visibility= View.VISIBLE
+                    veganLabel.visibility= View.INVISIBLE
                 }
             }
 

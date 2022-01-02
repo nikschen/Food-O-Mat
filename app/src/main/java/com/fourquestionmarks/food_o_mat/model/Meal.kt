@@ -29,8 +29,7 @@ data class Meal(
 {
 
     override fun toString(): String {
-        val veggie= if (isVeggie) "ja" else "nein"
-        val vegan= if (isVegan) "ja" else "nein"
+
         var returnString =""
         returnString += "$name;"
         returnString += "$ID;"
@@ -39,8 +38,8 @@ data class Meal(
         returnString += "${carbohydrates.toString().replace(".",",")};"
         returnString += "${proteins.toString().replace(".",",")};"
         returnString += "${fats.toString().replace(".",",")};"
-        returnString += "${veggie};"
-        returnString += "${vegan};"
+        returnString += "$isVeggie;"
+        returnString += isVegan
         return returnString
     }
 }
