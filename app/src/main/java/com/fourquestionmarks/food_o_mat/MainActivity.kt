@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ShareCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -135,6 +136,8 @@ class MainActivity : AppCompatActivity() {
         }
         val shareIntent = Intent.createChooser(intent, null)
         startActivity(shareIntent)
+
+
     }
 
 
