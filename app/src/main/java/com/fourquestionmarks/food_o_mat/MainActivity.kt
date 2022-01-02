@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        if (settings.getBoolValue("isFirstRun") && false) {
+        if (settings.getBoolValue("isFirstRun")) {
             val inputStream: InputStream = resources.openRawResource(R.raw.mahlzeiten)
             val reader = BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))
             val allLines = reader.readLines()
