@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) //TODO: Entfernen, wenn Night Mode fertig
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) //TODO: Entfernen, wenn Night Mode fertig
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
