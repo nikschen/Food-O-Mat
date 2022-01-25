@@ -6,16 +6,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.AddOrUpdateMealFragment">
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".ui.AddOrUpdateMealFragment"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="4dp"
+            tools:context=".ui.AddOrUpdateMealFragment">
+
+            <ImageView
+                android:id="@+id/mealImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:cropToPadding="true"
+                android:padding="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/example_meal_icon" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/meal_name_label"
@@ -46,7 +61,7 @@
                 <AutoCompleteTextView
                     android:id="@+id/category"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,8 +78,8 @@
                     android:id="@+id/calories"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="numberDecimal"
                     android:digits="0123456789.,"
+                    android:inputType="numberDecimal"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,8 +96,8 @@
                     android:id="@+id/carbohydrates"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="numberDecimal"
                     android:digits="0123456789.,"
+                    android:inputType="numberDecimal"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,8 +114,8 @@
                     android:id="@+id/proteins"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="numberDecimal"
                     android:digits="0123456789.,"
+                    android:inputType="numberDecimal"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -117,29 +132,50 @@
                     android:id="@+id/fats"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="numberDecimal"
                     android:digits="0123456789.,"
-                    android:singleLine="true"/>
+                    android:inputType="numberDecimal"
+                    android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <CheckBox
-                android:id="@+id/veggieCheckbox"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layoutDirection="rtl"
-                android:paddingHorizontal="10dp"
-                android:text="@string/new_isVeggie"
-                android:textAlignment="viewEnd"/>
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-            <CheckBox
-                android:id="@+id/veganCheckbox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layoutDirection="rtl"
-                android:paddingHorizontal="10dp"
-                android:text="@string/new_isVegan"
-                android:textAlignment="viewEnd"/>
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintGuide_percent="0.75"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/veggieCheckbox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layoutDirection="ltr"
+                    android:paddingHorizontal="10dp"
+                    android:text="@string/new_isVeggie"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/veganCheckbox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layoutDirection="ltr"
+                    android:paddingHorizontal="10dp"
+                    android:text="@string/new_isVegan"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/veggieCheckbox" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </ScrollView>

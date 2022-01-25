@@ -1,6 +1,7 @@
 package com.fourquestionmarks.food_o_mat.ui
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -39,6 +41,10 @@ class AddOrUpdateMealFragment : Fragment() {
     private var _binding: FragmentAddOrUpdateMealBinding? = null
     private val binding get() = _binding!!
 
+    private val selectImageFromGalleryResult = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let { binding.mealImage.setImageURI(uri) }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,6 +65,7 @@ class AddOrUpdateMealFragment : Fragment() {
             binding.category.setAdapter(adapter)
 
         }
+
         return binding.root
     }
 
@@ -257,6 +264,9 @@ class AddOrUpdateMealFragment : Fragment() {
             veganCheckbox.setOnClickListener{
                 if(veganCheckbox.isChecked) veggieCheckbox.isChecked=true
             }
+
+
+//            mealImage.setOnClickListener {getMealImage()}
         }
 
 
@@ -273,6 +283,11 @@ class AddOrUpdateMealFragment : Fragment() {
                 addNewMeal()
             }
         }
+    }
+
+    private fun getMealImage()
+    {
+        selectImageFromGalleryResult.launch("image/*")
     }
 
     /**
