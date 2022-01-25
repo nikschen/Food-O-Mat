@@ -46,6 +46,7 @@ class MealDetailFragment : Fragment() {
         binding.apply {
             val df = DecimalFormat("#.##")
             df.roundingMode=RoundingMode.HALF_UP
+            name.setText(meal.name, TextView.BufferType.SPANNABLE)
             category.setText(meal.category, TextView.BufferType.SPANNABLE)
             calories.setText(getString(R.string.caloriesWithUnit, meal.calories.roundToInt()), TextView.BufferType.SPANNABLE)
             carbohydrates.setText(getString(R.string.nutritionsWithUnit,df.format(meal.carbohydrates)), TextView.BufferType.SPANNABLE)
