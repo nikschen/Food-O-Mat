@@ -2,15 +2,22 @@ package com.fourquestionmarks.food_o_mat
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ShareCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -197,7 +204,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-
+    //controls menu option selection
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         //handle selection of menu item
         when (item.itemId) {
@@ -218,6 +225,32 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    //reacts to touch input anywhere on the screen
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            /**
+             * It gets into the above IF-BLOCK if anywhere the screen is touched.
+             */
+            val v: View? = currentFocus
+            if (v is EditText) {
+                /**
+                 * Now, it gets into the above IF-BLOCK if an EditText is already in focus, and you tap somewhere else
+                 * to take the focus away from that particular EditText. It could have 2 cases after tapping:
+                 * 1. No EditText has focus
+                 * 2. Focus is just shifted to the other EditText
+                 */
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    v.clearFocus()
+                    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(v.windowToken, 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -1,9 +1,11 @@
 package com.fourquestionmarks.food_o_mat.ui.random
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.doAfterTextChanged
@@ -295,6 +297,10 @@ class RandomFragment : Fragment() {
             else
             {
                 val meal:Meal=filteredByCalories[Random.nextInt(filteredByCalories.size)]
+
+                //hide keyboard if there is a result card
+                val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
                 bind(meal)
                 binding.resultMealCard.root.visibility = View.VISIBLE
 
