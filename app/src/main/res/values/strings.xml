@@ -22,10 +22,7 @@
 
     <string name="categories">Kategorien</string>
     <string name="noMealWithParamsAvailableToast">Kein Gericht zu diesen Kriterien verfügbar</string>
-    <string name="caloriesToLowError">Zu niedriger Wert für das Kalorienminimum</string>
-    <string name="caloriesToHighError">Zu hoher Wert für das Kalorienmaximum</string>
-    <string name="caloriesEmptyError">Kalorienangabe fehlt</string>
-    <string name="caloriesFormatError">Falsches Zahlenformat</string>
+
 
     <!-- meal item -->
     <string name="category">Kategorie:</string>
@@ -75,6 +72,21 @@
     <string name="exportMeals">Mahlzeiten exportieren (.csv)</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="minimalCaloriesHint">0000</string>
+    <string name="maximalCaloriesHint">1000</string>
 
+    <!-- error messages -->
+    <string name="nameMissingError">Name fehlt</string>
+    <string name="categoryMissingError">Kategorie fehlt</string>
+    <string name="caloriesMissingError">Kalorien fehlen</string>
+    <string name="invalidNumberFormatError">Ungültiges Zahlenformat</string>
+    <string name="carbonhydratesMissingError">Kohlenhydrate fehlen</string>
+    <string name="proteinsMissingError">Eiweiß fehlt</string>
+    <string name="fatsMissingError">Fett fehlt</string>
+    <string name="caloriesVeryHighError">Sehr hohe Kalorien. Vielleicht ein Fehler?</string>
+    <string name="caloriesToLowError">Zu niedriger Wert für das Kalorienminimum</string>
+    <string name="caloriesToHighError">Zu hoher Wert für das Kalorienmaximum</string>
+    <string name="caloriesEmptyError">Kalorienangabe fehlt</string>
+    <string name="caloriesFormatError">Falsches Zahlenformat</string>
 
 </resources>

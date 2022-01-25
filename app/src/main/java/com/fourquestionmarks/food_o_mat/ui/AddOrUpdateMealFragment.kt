@@ -75,7 +75,7 @@ class AddOrUpdateMealFragment : Fragment() {
 
             if((param==mealName||checkAll) && mealName.text.isNullOrEmpty())
             {
-                mealNameLabel.error = "Name fehlt"
+                mealNameLabel.error = getString(R.string.nameMissingError)
                 isValid=false
             }
             else mealNameLabel.error=null
@@ -84,7 +84,7 @@ class AddOrUpdateMealFragment : Fragment() {
 
             if((param==category||checkAll) && category.text.isNullOrEmpty())
             {
-                categoryLabel.error = "Kategorie fehlt"
+                categoryLabel.error = getString(R.string.categoryMissingError)
                 isValid=false
             }
             else categoryLabel.error=null
@@ -96,15 +96,15 @@ class AddOrUpdateMealFragment : Fragment() {
                 when {
                     calories.text.isNullOrEmpty() ->
                     {
-                        caloriesLabel.error = "Kalorien fehlen"
+                        caloriesLabel.error = getString(R.string.caloriesMissingError)
                         isValid = false
                     }
-                    calories.text.toString().toFloatOrNull() == null ->
+                    calories.text.toString().replace(',','.').toFloatOrNull() == null ->
                     {
-                        caloriesLabel.error = "Ungültiges Zahlenformat"
+                        caloriesLabel.error = getString(R.string.invalidNumberFormatError)
                         isValid = false
                     }
-                    calories.text.toString().toFloat() > 1500.0f -> caloriesLabel.error = "Sehr hohe Kalorien. Vielleicht ein Fehler?"
+                    calories.text.toString().replace(',','.').toFloat() > 1500.0f -> caloriesLabel.error = getString(R.string.caloriesVeryHighError)
                 }
 
             }
@@ -115,12 +115,12 @@ class AddOrUpdateMealFragment : Fragment() {
                 when {
                     carbohydrates.text.isNullOrEmpty() ->
                     {
-                        carbohydratesLabel.error = "Kohlenhydrate fehlen"
+                        carbohydratesLabel.error = getString(R.string.carbonhydratesMissingError)
                         isValid = false
                     }
-                    carbohydrates.text.toString().toFloatOrNull() == null ->
+                    carbohydrates.text.toString().replace(',','.').toFloatOrNull() == null ->
                     {
-                        carbohydratesLabel.error = "Ungültiges Zahlenformat"
+                        carbohydratesLabel.error = getString(R.string.invalidNumberFormatError)
                         isValid = false
                     }
                     else -> carbohydratesLabel.error = null
@@ -130,11 +130,11 @@ class AddOrUpdateMealFragment : Fragment() {
             if(param==proteins||checkAll) {
                 when {
                     proteins.text.isNullOrEmpty() -> {
-                        proteinsLabel.error = "Eiweiß fehlt"
+                        proteinsLabel.error = getString(R.string.proteinsMissingError)
                         isValid = false
                     }
-                    proteins.text.toString().toFloatOrNull() == null -> {
-                        proteinsLabel.error = "Ungültiges Zahlenformat"
+                    proteins.text.toString().replace(',','.').toFloatOrNull() == null -> {
+                        proteinsLabel.error = getString(R.string.invalidNumberFormatError)
                         isValid = false
                     }
                     else -> proteinsLabel.error = null
@@ -145,11 +145,11 @@ class AddOrUpdateMealFragment : Fragment() {
             if(param==fats||checkAll) {
                 when {
                     fats.text.isNullOrEmpty() -> {
-                        fatsLabel.error = "Fett fehlt"
+                        fatsLabel.error = getString(R.string.fatsMissingError)
                         isValid = false
                     }
-                    fats.text.toString().toFloatOrNull() == null -> {
-                        fatsLabel.error = "Ungütliges Zahlenformat"
+                    fats.text.toString().replace(',','.').toFloatOrNull() == null -> {
+                        fatsLabel.error = getString(R.string.invalidNumberFormatError)
                         isValid = false
                     }
                     else -> fatsLabel.error = null
@@ -213,6 +213,7 @@ class AddOrUpdateMealFragment : Fragment() {
         if (isValid(null, true)) {
             viewModel.updateMeal(
                 Meal(
+                    ID=meal.ID,
                     name=binding.mealName.text.toString(),
                     category=binding.category.text.toString(),
                     calories=binding.calories.text.toString().replace(',','.').toFloat().roundToInt().toFloat(),
