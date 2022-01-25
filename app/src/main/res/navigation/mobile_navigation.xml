@@ -71,7 +71,8 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_mealDetailFragment_to_addOrUpdateMealFragment"
-            app:destination="@id/addOrUpdateMealFragment" />
+            app:destination="@id/addOrUpdateMealFragment"
+            app:popUpTo="@id/navigation_dashboard" />
         <action
             android:id="@+id/action_mealDetailFragment_to_navigation_search"
             app:destination="@id/navigation_search"
