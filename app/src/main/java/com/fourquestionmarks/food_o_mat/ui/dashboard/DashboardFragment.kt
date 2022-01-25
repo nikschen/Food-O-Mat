@@ -20,6 +20,7 @@ import com.fourquestionmarks.food_o_mat.ui.MealViewModel
 import com.fourquestionmarks.food_o_mat.ui.MealViewModelFactory
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.time.LocalDate
 import kotlin.math.roundToInt
 import kotlin.random.Random
 
@@ -48,7 +49,13 @@ class DashboardFragment : Fragment() {
             allMeals=listOfMeals
             if(allMeals.isNotEmpty())
             {
-                val randomID:Int=Random.nextInt(0,allMeals.size)
+                var randomSeedDependingOfTheDay:Int= LocalDate.now().dayOfYear
+                if(randomSeedDependingOfTheDay>allMeals.size)
+                {
+                    randomSeedDependingOfTheDay.floorDiv(allMeals.size)
+                    randomSeedDependingOfTheDay+=LocalDate.now().dayOfWeek.ordinal
+                }
+                val randomID:Int=randomSeedDependingOfTheDay
                 meal=allMeals[randomID]
                 bind(meal)
                 binding.mealCardInclude.mealCard.setOnClickListener {
