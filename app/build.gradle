@@ -12,8 +12,8 @@ android {
         applicationId "com.fourquestionmarks.food_o_mat"
         minSdk 28
         targetSdk 30
-        versionCode 8
-        versionName "1.1"
+        versionCode 9
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
