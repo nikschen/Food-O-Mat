@@ -14,7 +14,7 @@ data class Meal(
     @NotNull
     var category: String,
     @NotNull
-    var calories: Float,
+    var calories: Int,
     @NotNull
     var carbohydrates: Float,
     @NotNull

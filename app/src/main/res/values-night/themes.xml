@@ -4,19 +4,15 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
-        <item name="colorOnPrimary">@color/primaryTextColor</item>
-        <!-- Secondary brand color. -->
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color.-->
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
-        <item name="colorOnSecondary">@color/secondaryTextColor</item>
+        <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
         <!-- Customize your theme here. -->
-        <item name="backgroundTint">?dashboardMaterialCardColor</item>
-        <item name="dashboardMaterialCardColor">@color/black</item>
-        <item name="contrastTextColor">@color/white</item>
         <item name="colorOnError">@color/colorOnErrorNightmode</item>
-        <item name="android:textColorPrimary">@color/white</item>
-
+        <item name="android:windowBackground" tools:targetApi="l">@color/black</item>
     </style>
 </resources>

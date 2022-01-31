@@ -1,6 +1,8 @@
 package com.fourquestionmarks.food_o_mat.ui
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,21 +10,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fourquestionmarks.food_o_mat.FoodOMatApplication
 import com.fourquestionmarks.food_o_mat.R
 import com.fourquestionmarks.food_o_mat.databinding.FragmentAddOrUpdateMealBinding
 import com.fourquestionmarks.food_o_mat.model.Meal
-import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -40,9 +38,22 @@ class AddOrUpdateMealFragment : Fragment() {
 
     private var _binding: FragmentAddOrUpdateMealBinding? = null
     private val binding get() = _binding!!
-
-    private val selectImageFromGalleryResult = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let { binding.mealImage.setImageURI(uri) }
+    private val selectImageFromGaleryResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        Toast.makeText(context, "Activity wurde aufgerufen", Toast.LENGTH_SHORT).show()
+        if (result.resultCode == Activity.RESULT_OK) {
+            // There are no request codes
+            val data: Intent? = result.data
+            val selectedImageUri: Uri? = data?.data
+            if (null != selectedImageUri) {
+                // Get the path from the Uri
+//                val path = getPathFromURI(selectedImageUri)
+                binding.mealImage.setImageURI(selectedImageUri)
+            }
+            else
+            {
+                Toast.makeText(context, "Kein Bild angekommen", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onCreateView(
@@ -196,7 +207,7 @@ class AddOrUpdateMealFragment : Fragment() {
                     ID=null,
                     name=binding.mealName.text.toString(),
                     category=binding.category.text.toString(),
-                    calories=binding.calories.text.toString().replace(',','.').toFloat().roundToInt().toFloat(),
+                    calories=binding.calories.text.toString().toInt(),
                     carbohydrates=binding.carbohydrates.text.toString().replace(',','.').toFloat(),
                     proteins=binding.proteins.text.toString().replace(',','.').toFloat(),
                     fats=binding.fats.text.toString().replace(',','.').toFloat(),
@@ -223,7 +234,7 @@ class AddOrUpdateMealFragment : Fragment() {
                     ID=meal.ID,
                     name=binding.mealName.text.toString(),
                     category=binding.category.text.toString(),
-                    calories=binding.calories.text.toString().replace(',','.').toFloat().roundToInt().toFloat(),
+                    calories=binding.calories.text.toString().toInt(),
                     carbohydrates=binding.carbohydrates.text.toString().replace(',','.').toFloat(),
                     proteins=binding.proteins.text.toString().replace(',','.').toFloat(),
                     fats=binding.fats.text.toString().replace(',','.').toFloat(),
@@ -266,7 +277,7 @@ class AddOrUpdateMealFragment : Fragment() {
             }
 
 
-//            mealImage.setOnClickListener {getMealImage()}
+            mealImage.setOnClickListener {getMealImage()}
         }
 
 
@@ -287,7 +298,12 @@ class AddOrUpdateMealFragment : Fragment() {
 
     private fun getMealImage()
     {
-        selectImageFromGalleryResult.launch("image/*")
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+        selectImageFromGaleryResult.launch(Intent.createChooser(intent, "Select Picture"))
+
     }
 
     /**

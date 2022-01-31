@@ -53,6 +53,7 @@ class RandomFragment : Fragment() {
         binding.caloriesSlider.valueFrom=lowestPossibleCalorieScore
         binding.caloriesSlider.valueTo=highestPossibleCalorieScore
 
+
         //get lowest and highest calorie score out of the database
         lifecycleScope.launch {
             val getLowestScore = async(Dispatchers.IO) {
@@ -287,7 +288,7 @@ class RandomFragment : Fragment() {
             val filteredByIsVeggie: List<Meal> = if(binding.veggieCheckbox.isChecked) allMeals.filter { meal -> meal.isVeggie} else allMeals
             val filteredByIsVegan: List<Meal> = if(binding.veganCheckbox.isChecked) filteredByIsVeggie.filter { meal -> meal.isVegan} else filteredByIsVeggie
             val filteredByCategories: List<Meal> = if(wantedCategories.isNotEmpty()) filteredByIsVegan.filter { meal -> wantedCategories.contains(meal.category)} else filteredByIsVegan
-            val filteredByCalories: List<Meal> = filteredByCategories.filter { meal -> meal.calories.roundToInt()>=binding.caloriesSlider.values[0].roundToInt() && meal.calories.roundToInt()<=binding.caloriesSlider.values[1].roundToInt()}
+            val filteredByCalories: List<Meal> = filteredByCategories.filter { meal -> meal.calories>=binding.caloriesSlider.values[0].roundToInt() && meal.calories<=binding.caloriesSlider.values[1].roundToInt()}
 
             if(filteredByCalories.isNullOrEmpty())
             {
@@ -317,6 +318,7 @@ class RandomFragment : Fragment() {
         binding.resultMealCard.apply {
             name.text=meal.name
             mealCategory.text=meal.category
+            mealCalories.text=meal.calories.toString()
             if(meal.isVeggie)
             {
                 veggieLabelEmpty.visibility=View.INVISIBLE

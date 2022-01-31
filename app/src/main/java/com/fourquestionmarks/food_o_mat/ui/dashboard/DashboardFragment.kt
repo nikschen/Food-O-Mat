@@ -4,16 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.fourquestionmarks.food_o_mat.FoodOMatApplication
 import com.fourquestionmarks.food_o_mat.R
-import com.fourquestionmarks.food_o_mat.adapter.MealListAdapter
 import com.fourquestionmarks.food_o_mat.databinding.FragmentDashboardBinding
 import com.fourquestionmarks.food_o_mat.model.Meal
 import com.fourquestionmarks.food_o_mat.ui.MealViewModel
@@ -21,8 +15,6 @@ import com.fourquestionmarks.food_o_mat.ui.MealViewModelFactory
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.time.LocalDate
-import kotlin.math.roundToInt
-import kotlin.random.Random
 
 /**
  * [Fragment] that displays a random [Meal] of the day
@@ -77,7 +69,7 @@ class DashboardFragment : Fragment() {
             df.roundingMode= RoundingMode.HALF_UP
             name.text=meal.name
             category.text=meal.category
-            calories.text=getString(R.string.caloriesWithUnit, meal.calories.roundToInt())
+            calories.text=getString(R.string.caloriesWithUnit, meal.calories)
             carbohydrates.text=getString(R.string.nutritionsWithUnit,df.format(meal.carbohydrates))
             proteins.text=getString(R.string.nutritionsWithUnit,df.format(meal.proteins))
             fats.text=getString(R.string.nutritionsWithUnit,df.format(meal.fats))

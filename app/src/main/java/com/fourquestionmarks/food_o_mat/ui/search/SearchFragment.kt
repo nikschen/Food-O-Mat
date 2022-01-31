@@ -1,9 +1,7 @@
 package com.fourquestionmarks.food_o_mat.ui.search
 
 import android.content.Context
-import android.graphics.Rect
 import android.os.Bundle
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,11 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
-import androidx.core.content.ContextCompat.getSystemService
 
-import android.widget.EditText
-
-import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 
 
@@ -297,7 +291,7 @@ class SearchFragment : Fragment() {
             val filteredByIsVeggie: List<Meal> = if(binding.veggieCheckbox.isChecked) filteredByName.filter { meal -> meal.isVeggie} else filteredByName
             val filteredByIsVegan: List<Meal> = if(binding.veganCheckbox.isChecked) filteredByIsVeggie.filter { meal -> meal.isVegan} else filteredByIsVeggie
             val filteredByCategories: List<Meal> = if(wantedCategories.isNotEmpty()) filteredByIsVegan.filter { meal -> wantedCategories.contains(meal.category)} else filteredByIsVegan
-            val filteredByCalories: List<Meal> = filteredByCategories.filter { meal -> meal.calories.roundToInt()>=binding.caloriesSlider.values[0].roundToInt() && meal.calories.roundToInt()<=binding.caloriesSlider.values[1].roundToInt()}
+            val filteredByCalories: List<Meal> = filteredByCategories.filter { meal -> meal.calories>=binding.caloriesSlider.values[0].roundToInt() && meal.calories<=binding.caloriesSlider.values[1].roundToInt()}
 
             if(filteredByCalories.isNullOrEmpty())
             {

@@ -15,9 +15,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.ShareCompat
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -49,7 +46,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) //TODO: Entfernen, wenn Night Mode fertig
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -95,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                     name=mealData[0],
                     ID=mealData[1].toInt(),
                     category = mealData[2],
-                    calories = mealData[3].replace(",", ".").toFloat(),
+                    calories = mealData[3].toInt(),
                     carbohydrates = mealData[4].replace(",", ".").toFloat(),
                     proteins = mealData[5].replace(",", ".").toFloat(),
                     fats = mealData[6].replace(",", ".").toFloat(),

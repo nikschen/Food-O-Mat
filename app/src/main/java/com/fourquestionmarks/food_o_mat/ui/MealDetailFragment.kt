@@ -16,7 +16,6 @@ import com.fourquestionmarks.food_o_mat.model.Meal
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import kotlin.math.roundToInt
 
 /**
  * A fragment representing a detailed view of [Meal] with full data
@@ -48,7 +47,7 @@ class MealDetailFragment : Fragment() {
             df.roundingMode=RoundingMode.HALF_UP
             name.setText(meal.name, TextView.BufferType.SPANNABLE)
             category.setText(meal.category, TextView.BufferType.SPANNABLE)
-            calories.setText(getString(R.string.caloriesWithUnit, meal.calories.roundToInt()), TextView.BufferType.SPANNABLE)
+            calories.setText(getString(R.string.caloriesWithUnit, meal.calories), TextView.BufferType.SPANNABLE)
             carbohydrates.setText(getString(R.string.nutritionsWithUnit,df.format(meal.carbohydrates)), TextView.BufferType.SPANNABLE)
             proteins.setText(getString(R.string.nutritionsWithUnit,df.format(meal.proteins)), TextView.BufferType.SPANNABLE)
             fats.setText(getString(R.string.nutritionsWithUnit,df.format(meal.fats)), TextView.BufferType.SPANNABLE)

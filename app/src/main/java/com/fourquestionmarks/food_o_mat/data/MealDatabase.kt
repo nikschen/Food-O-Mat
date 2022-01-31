@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
 
-@Database(entities = [Meal::class], version = 7, exportSchema = false)
+@Database(entities = [Meal::class], version = 8, exportSchema = true)
 abstract class FoodOMatDatabase : RoomDatabase() {
 
     abstract fun mealDao(): MealDao

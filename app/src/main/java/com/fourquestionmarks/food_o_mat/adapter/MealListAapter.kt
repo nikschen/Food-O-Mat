@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fourquestionmarks.food_o_mat.R
 import com.fourquestionmarks.food_o_mat.databinding.MealCardShortBinding
 import com.fourquestionmarks.food_o_mat.model.Meal
-import kotlin.math.roundToInt
 
 class MealListAdapter(private val onMealClicked: (Meal) -> Unit) :
     ListAdapter<Meal, MealListAdapter.MealViewHolder>(DiffCallback) {
@@ -37,7 +36,7 @@ class MealListAdapter(private val onMealClicked: (Meal) -> Unit) :
             binding.apply {
                 name.text=meal.name
                 mealCategory.text=meal.category
-                mealCalories.text=context.getString(R.string.caloriesWithUnit,meal.calories.roundToInt())
+                mealCalories.text=context.getString(R.string.caloriesWithUnit,meal.calories)
                 if(meal.isVeggie)
                 {
                     veggieLabelEmpty.visibility= View.INVISIBLE

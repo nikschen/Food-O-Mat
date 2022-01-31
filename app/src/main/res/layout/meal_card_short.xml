@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mealCard"
@@ -8,7 +7,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:clickable="true"
-    android:padding="10dp">
+    android:padding="10dp"
+    app:cardBackgroundColor="?android:attr/windowBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,6 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="4dp"
+            android:textAlignment="viewStart"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/name"
@@ -41,6 +42,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="4dp"
+            android:textAlignment="viewEnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/name"
@@ -77,8 +79,7 @@
             android:contentDescription="@string/isVeganLabelDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/empty_circle"
-            app:tint="?attr/contrastTextColor" />
+            app:srcCompat="@drawable/empty_circle" />
 
         <ImageView
             android:id="@+id/veggieLabel"
@@ -103,7 +104,6 @@
             app:layout_constraintEnd_toStartOf="@+id/veganLabel"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/empty_circle"
-            app:tint="?attr/contrastTextColor"
             tools:visibility="invisible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
