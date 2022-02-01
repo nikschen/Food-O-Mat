@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
@@ -26,6 +27,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 
 
 /**
@@ -93,6 +95,14 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.mealNameInput.setOnEditorActionListener(TextView.OnEditorActionListener{ _, actionId, _ ->
+            if(actionId== EditorInfo.IME_ACTION_SEARCH) {
+                startSearch()
+                return@OnEditorActionListener true
+            }
+            false
+        })
 
         binding.getMealButton.isEnabled=true
 

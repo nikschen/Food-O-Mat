@@ -32,7 +32,8 @@
             android:gravity="center"
             android:hint="@string/new_meal_name"
             android:minHeight="48dp"
-            app:boxBackgroundColor="?android:attr/panelBackground">
+            app:boxBackgroundColor="?android:attr/panelBackground"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/mealNameInput"
@@ -40,7 +41,9 @@
                 android:layout_height="wrap_content"
                 android:background="?android:attr/windowBackground"
                 android:ems="10"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:imeOptions="actionSearch"
+                android:inputType="text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

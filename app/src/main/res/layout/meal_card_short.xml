@@ -54,8 +54,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintGuide_begin="196dp"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintGuide_percent="0.75"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
@@ -79,7 +78,8 @@
             android:contentDescription="@string/isVeganLabelDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/empty_circle" />
+            app:srcCompat="@drawable/empty_circle"
+            app:tint="?android:attr/textColorPrimary" />
 
         <ImageView
             android:id="@+id/veggieLabel"
@@ -104,7 +104,8 @@
             app:layout_constraintEnd_toStartOf="@+id/veganLabel"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/empty_circle"
-            tools:visibility="invisible" />
+            tools:visibility="invisible"
+            app:tint="?android:attr/textColorPrimary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

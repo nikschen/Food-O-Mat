@@ -30,7 +30,6 @@
                 android:cropToPadding="true"
                 android:padding="4dp"
                 android:scaleType="centerCrop"/>
-<!--                android:src="@drawable/example_meal_icon" -->
 
 
             <com.google.android.material.textfield.TextInputLayout
