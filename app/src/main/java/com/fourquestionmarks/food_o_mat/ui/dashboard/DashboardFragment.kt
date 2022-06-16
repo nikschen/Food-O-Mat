@@ -36,7 +36,7 @@ class DashboardFragment : Fragment() {
     ): View {
 
         viewModel= MealViewModelFactory((activity?.application as FoodOMatApplication).database.mealDao()).create(MealViewModel::class.java)
-        //gets all Meals to get all meals and select a random meal for displaying
+        //gets all Meals to select a random meal for displaying
         viewModel.allMeals.observe(this.viewLifecycleOwner) { listOfMeals ->
             allMeals=listOfMeals
             if(allMeals.isNotEmpty())
@@ -44,8 +44,7 @@ class DashboardFragment : Fragment() {
                 var randomSeedDependingOfTheDay:Int= LocalDate.now().dayOfYear
                 if(randomSeedDependingOfTheDay>allMeals.size)
                 {
-                    randomSeedDependingOfTheDay.floorDiv(allMeals.size)
-                    randomSeedDependingOfTheDay+=LocalDate.now().dayOfWeek.ordinal
+                    randomSeedDependingOfTheDay%=allMeals.size
                 }
                 val randomID:Int=randomSeedDependingOfTheDay
                 meal=allMeals[randomID]
