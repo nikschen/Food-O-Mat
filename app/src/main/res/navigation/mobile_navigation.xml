@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_navigation_dashboard_to_mealDetailFragment"
             app:destination="@id/mealDetailFragment" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_addOrUpdateMealViaIngredientsFragment"
+            app:destination="@id/addOrUpdateMealViaIngredientsFragment" />
     </fragment>
 
     <fragment
@@ -111,5 +114,20 @@
         android:name="com.fourquestionmarks.food_o_mat.ui.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/addOrUpdateMealViaIngredientsFragment"
+        android:name="com.fourquestionmarks.food_o_mat.ui.AddOrUpdateMealViaIngredientsFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_add_or_update_meal_via_ingredients">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="mealID"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_addOrUpdateMealViaIngredientsFragment_to_mealDetailFragment"
+            app:destination="@id/mealDetailFragment" />
+    </fragment>
 
 </navigation>

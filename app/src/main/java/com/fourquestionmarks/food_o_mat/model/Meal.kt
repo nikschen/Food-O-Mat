@@ -34,7 +34,7 @@ data class Meal(
         returnString += "$name;"
         returnString += "$ID;"
         returnString += "$category;"
-        returnString += "${calories.toString().replace(".",",")};"
+        returnString += "$calories;"
         returnString += "${carbohydrates.toString().replace(".",",")};"
         returnString += "${proteins.toString().replace(".",",")};"
         returnString += "${fats.toString().replace(".",",")};"

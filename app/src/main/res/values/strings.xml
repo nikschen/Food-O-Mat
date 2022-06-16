@@ -88,5 +88,15 @@
     <string name="caloriesToHighError">Zu hoher Wert für das Kalorienmaximum</string>
     <string name="caloriesEmptyError">Kalorienangabe fehlt</string>
     <string name="caloriesFormatError">Falsches Zahlenformat</string>
+    <string name="add_new_ingredient">Neue Zutat hinzufügen</string>
+    <string name="add_meal_directly">via Nährwerte</string>
+    <string name="add_meal_via_ingredients">Via Zutaten</string>
+    <string name="ingredientNameHint">Name</string>
+    <string name="ingredientGewichtHint">Gewicht</string>
+    <string name="ingredientCaloriesHint">Kalorien pro 100g</string>
+    <string name="ingredientCarbohydratesHint">Kohlenhydrate pro 100g</string>
+    <string name="ingredientFatsHint">Fett pro 100g</string>
+    <string name="ingredientsProteinsHint">Eiweiß pro 100g</string>
+    <string name="save_ingredient_button_text">Speichern</string>
 
 </resources>

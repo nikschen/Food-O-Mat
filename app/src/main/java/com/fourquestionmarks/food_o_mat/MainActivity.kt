@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
+        settings.writeBoolValue("isFirstRun", true)//TODO: Nur während Entwicklung!!!!
+
         if (settings.getBoolValue("isFirstRun")) {
             val inputStream: InputStream = resources.openRawResource(R.raw.mahlzeiten)
             val reader = BufferedReader(InputStreamReader(inputStream, Charset.forName("UTF-8")))

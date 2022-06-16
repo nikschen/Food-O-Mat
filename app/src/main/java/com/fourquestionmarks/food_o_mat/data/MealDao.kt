@@ -1,6 +1,7 @@
 package com.fourquestionmarks.food_o_mat.data
 
 import androidx.room.*
+import com.fourquestionmarks.food_o_mat.model.Ingredient
 import com.fourquestionmarks.food_o_mat.model.Meal
 import kotlinx.coroutines.flow.Flow
 
@@ -39,4 +40,12 @@ interface MealDao
 
     @Query("SELECT COUNT(ID) from meals")
     fun getMealCount():Int
+
+    @Insert
+    suspend fun insertMealAndIngredients(meal: Meal, ingredients: List<Ingredient>)
+
+    @Query(
+        "SELECT * FROM meals JOIN ingredients ON meals.ID=ingredients.mealID where mealID= :ID"
+    )
+    fun getMealWithIngredientsByMealID(ID:Int): Map<Meal, List<Ingredient>>
 }

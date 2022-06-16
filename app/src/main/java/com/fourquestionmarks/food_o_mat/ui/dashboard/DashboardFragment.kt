@@ -87,5 +87,10 @@ class DashboardFragment : Fragment() {
             val action = DashboardFragmentDirections.actionNavigationDashboardToAddOrUpdateMealFragment(getString(R.string.title_new_meal),0)
             findNavController().navigate(action)
         }
+
+        binding.addMealViaIngredientsButton.setOnClickListener {
+            val action = DashboardFragmentDirections.actionNavigationDashboardToAddOrUpdateMealViaIngredientsFragment(getString(R.string.title_new_meal),0)
+            findNavController().navigate(action)
+        }
     }
 }
